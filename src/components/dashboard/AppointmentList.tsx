@@ -19,63 +19,63 @@ export function AppointmentList({ appointments }: AppointmentListProps) {
              initial={{ opacity: 0, scale: 0.95 }}
              animate={{ opacity: 1, scale: 1 }}
              transition={{ delay: index * 0.1 }}
-             className="relative overflow-hidden rounded-xl border bg-card p-5 text-sm transition-all hover:bg-muted/30"
+             className="relative overflow-hidden rounded-2xl border border-slate-200/60 bg-white p-6 transition-all hover:bg-slate-50 hover:shadow-sm hover:shadow-slate-200/50 hover:-translate-y-0.5"
            >
              <div className="flex items-start justify-between">
                <div className="flex items-center gap-3">
-                 <div className="h-10 w-10 flex items-center justify-center rounded-lg bg-primary/10">
-                   <Calendar className="h-5 w-5 text-primary font-bold" />
+                 <div className="h-12 w-12 flex items-center justify-center rounded-2xl bg-purple-50 border border-purple-100/50">
+                   <Calendar className="h-5 w-5 text-purple-600" />
                  </div>
-                 <div>
-                   <h4 className="font-bold tracking-tight text-base">{appt.title}</h4>
-                   <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
-                     <Avatar className="h-4 w-4">
-                       <AvatarFallback className="text-[8px]">{appt.participant.split(' ').map((n: string)=>n[0]).join('')}</AvatarFallback>
+                 <div className="flex flex-col gap-0.5">
+                   <h4 className="text-base font-black tracking-tight text-slate-800">{appt.title}</h4>
+                   <div className="flex items-center gap-2 text-xs text-slate-500 mt-1">
+                     <Avatar className="h-5 w-5 ring-2 ring-white">
+                       <AvatarFallback className="text-[8px] font-black bg-purple-100 text-purple-700 uppercase">{appt.participant.split(' ').map((n: string)=>n[0]).join('')}</AvatarFallback>
                      </Avatar>
-                     <span className="font-medium">{appt.participant}</span>
+                     <span className="font-bold">{appt.participant}</span>
                    </div>
                  </div>
                </div>
-               <Badge variant="outline" className="h-5 text-[10px]">{appt.type}</Badge>
+               <Badge variant="outline" className="h-6 text-[10px] font-black uppercase tracking-widest bg-slate-50 border-slate-200 text-slate-500">{appt.type}</Badge>
              </div>
    
              <div className="mt-4 grid grid-cols-2 gap-4">
                <div className="space-y-1">
-                 <div className="flex items-center gap-1.5 text-muted-foreground uppercase tracking-widest text-[8px] font-bold">
-                   <Navigation className="h-3 w-3" />
+                 <div className="flex items-center gap-1.5 text-slate-400 uppercase tracking-widest text-[9px] font-bold">
+                   <Navigation className="h-3.5 w-3.5 text-slate-400" />
                    Leave At
                  </div>
-                 <p className="font-bold text-sm">{appt.leave}</p>
+                 <p className="font-black text-slate-800 text-[15px]">{appt.leave}</p>
                </div>
                <div className="space-y-1">
-                 <div className="flex items-center gap-1.5 text-muted-foreground uppercase tracking-widest text-[8px] font-bold">
-                   <Clock className="h-3 w-3" />
+                 <div className="flex items-center gap-1.5 text-slate-400 uppercase tracking-widest text-[9px] font-bold">
+                   <Clock className="h-3.5 w-3.5 text-slate-400" />
                    Appt Time
                  </div>
-                 <p className="font-bold text-sm">{appt.time}</p>
+                 <p className="font-black text-slate-800 text-[15px]">{appt.time}</p>
                </div>
              </div>
    
              <div className="mt-4 space-y-2">
-               <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                 <MapPin className="h-3.5 w-3.5" />
+               <div className="flex items-center gap-2 text-xs font-medium text-slate-500">
+                 <MapPin className="h-4 w-4 text-slate-400 shrink-0" />
                  <span className="truncate">{appt.location}</span>
                </div>
-               <div className="rounded-lg bg-purple-50/50 p-2.5 text-[11px] border border-purple-100/50 leading-relaxed italic text-purple-900/80">
-                 <span className="font-bold uppercase tracking-widest text-[9px] not-italic mr-1.5">Prep:</span>
+               <div className="rounded-xl bg-purple-50/50 p-3 text-xs border border-purple-100/50 leading-relaxed text-purple-900/80 font-medium">
+                 <span className="font-black uppercase tracking-widest text-[10px] text-purple-600 mr-2">Prep Tasks:</span>
                  {appt.prep}
                </div>
              </div>
    
              <div className="mt-5 flex gap-2">
-               <button className="flex-1 rounded-md bg-zinc-900 px-4 py-2 text-xs font-bold text-zinc-100 transition-all hover:bg-zinc-800">
-                 Check Prep Checklist
+               <button className="flex-1 rounded-xl bg-slate-900 px-4 py-2.5 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-slate-800 shadow-md shadow-slate-200">
+                 Checklists
                </button>
              </div>
            </motion.div>
          ))
       ) : (
-         <div className="col-span-1 md:col-span-2 p-12 text-center border border-dashed rounded-xl text-sm font-medium text-muted-foreground italic">No appointments for today.</div>
+         <div className="col-span-1 md:col-span-2 p-12 text-center border-2 border-dashed border-slate-200/60 rounded-2xl bg-slate-50/50 text-xs font-bold uppercase tracking-widest text-slate-400">No appointments for today.</div>
       )}
     </div>
   );

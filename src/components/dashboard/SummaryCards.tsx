@@ -12,10 +12,10 @@ const iconMap: Record<string, any> = {
 };
 
 const colorMap: Record<string, any> = {
-  blue: { text: "text-purple-600", bg: "bg-purple-50" },
-  primary: { text: "text-primary", bg: "bg-primary/10" },
-  red: { text: "text-destructive", bg: "bg-destructive/10" },
-  green: { text: "text-indigo-600", bg: "bg-indigo-50" }
+  blue: { text: "text-blue-600", bg: "bg-blue-50 border border-blue-100", icon: "text-blue-500" },
+  primary: { text: "text-purple-600", bg: "bg-purple-50 border border-purple-100", icon: "text-purple-500" },
+  red: { text: "text-rose-600", bg: "bg-rose-50 border border-rose-100", icon: "text-rose-500" },
+  green: { text: "text-emerald-600", bg: "bg-emerald-50 border border-emerald-100", icon: "text-emerald-500" }
 };
 
 interface SummaryCardsProps {
@@ -36,15 +36,15 @@ export function SummaryCards({ metrics }: SummaryCardsProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
           >
-            <Card className="overflow-hidden border-none shadow-sm transition-all hover:shadow-md">
-              <CardContent className="flex items-center gap-4 p-5">
-                <div className={`p-3 rounded-xl ${colors.bg}`}>
-                  <Icon className={`h-6 w-6 ${colors.text}`} />
+            <Card className="overflow-hidden border border-slate-200/60 shadow-sm shadow-slate-200/50 rounded-2xl transition-all hover:shadow-md hover:border-purple-200 hover:-translate-y-0.5 group bg-white">
+              <CardContent className="flex items-center gap-5 p-5">
+                <div className={`p-3.5 rounded-2xl ${colors.bg} transition-transform group-hover:scale-110`}>
+                  <Icon className={`h-6 w-6 ${colors.icon}`} />
                 </div>
-                <div className="flex flex-col">
-                  <p className="text-sm font-medium text-muted-foreground">{item.title}</p>
+                <div className="flex flex-col gap-1">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">{item.title}</p>
                   <div className="flex items-baseline gap-2">
-                    <h3 className="text-2xl font-bold tracking-tight">{item.value}</h3>
+                    <h3 className="text-3xl font-black tracking-tight text-slate-800">{item.value}</h3>
                   </div>
                 </div>
               </CardContent>

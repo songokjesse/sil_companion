@@ -49,14 +49,14 @@ export function Sidebar({ isAdminView = false }: { isAdminView?: boolean }) {
   };
 
   return (
-    <aside className="sticky top-0 h-screen w-80 flex flex-col border-r bg-muted/40 p-4 transition-all overflow-y-auto">
+    <aside className="sticky top-0 h-screen w-80 flex flex-col border-r border-slate-100/50 bg-slate-50/40 p-5 transition-all overflow-y-auto">
       <div className="flex items-center gap-3 mb-8 ml-3">
         <div className="h-9 w-9 flex items-center justify-center rounded-xl bg-purple-600 shadow-lg shadow-purple-200">
           <ShieldCheck className="h-6 w-6 text-white" />
         </div>
         <div>
-           <h2 className="text-xl font-bold tracking-tight text-primary leading-none">SILCompanion</h2>
-           {isAdminView && <span className="text-[10px] font-black uppercase text-purple-600 tracking-widest">Admin Panel</span>}
+           <h2 className="text-xl font-black tracking-tight text-slate-800 leading-none">SIL<span className="text-purple-600">Companion</span></h2>
+           {isAdminView && <span className="text-[10px] font-black uppercase text-purple-600 tracking-widest mt-1 block">Admin Console</span>}
         </div>
       </div>
 
@@ -69,13 +69,13 @@ export function Sidebar({ isAdminView = false }: { isAdminView?: boolean }) {
             key={item.label}
             href={item.href}
             className={cn(
-              "group flex w-full items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-semibold transition-all hover:bg-muted active:scale-[0.98]",
-              item.active && "bg-white shadow-sm shadow-black/5 text-primary"
+              "group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition-all hover:bg-slate-100/80 active:scale-[0.98]",
+              item.active ? "bg-white shadow-sm shadow-slate-200/50 border border-slate-200/60 text-slate-800" : "text-slate-600 border border-transparent"
             )}
           >
             <item.icon className={cn(
-              "h-5 w-5 text-muted-foreground transition-colors group-hover:text-primary",
-              item.active && "text-purple-600"
+              "h-5 w-5 transition-colors",
+              item.active ? "text-purple-600" : "text-slate-400 group-hover:text-slate-600"
             )} />
             {item.label}
             {item.active && <div className="ml-auto h-1.5 w-1.5 rounded-full bg-purple-600" />}
@@ -85,7 +85,7 @@ export function Sidebar({ isAdminView = false }: { isAdminView?: boolean }) {
         {user?.role === "ADMIN" && !isAdminView && (
            <Link
              href="/admin"
-             className="group flex w-full items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-black text-purple-600 hover:bg-purple-50 transition-all mt-4 border border-purple-100 border-dashed"
+             className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-black text-purple-600 hover:bg-purple-50 transition-all mt-4 border border-purple-100 border-dashed"
            >
              <Settings className="h-5 w-5" />
              Switch to Admin Mode
@@ -95,7 +95,7 @@ export function Sidebar({ isAdminView = false }: { isAdminView?: boolean }) {
         {isAdminView && (
            <Link
              href="/"
-             className="group flex w-full items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-black text-slate-600 hover:bg-slate-50 transition-all mt-4 border border-slate-200 border-dashed"
+             className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-black text-slate-600 hover:bg-white hover:shadow-sm hover:border-slate-200 transition-all mt-4 border border-slate-200 border-dashed"
            >
              <LayoutDashboard className="h-5 w-5" />
              Exit Admin Mode

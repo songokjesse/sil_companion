@@ -16,12 +16,12 @@ interface DashboardProps {
 
 export function Dashboard({ initialData }: DashboardProps) {
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-background">
+    <div className="flex h-screen w-full overflow-hidden bg-slate-50/40">
       <Sidebar />
       <div className="flex flex-1 flex-col overflow-hidden">
         <Header houseName={initialData.houseName} />
-        <ScrollArea className="flex-1 bg-muted/20">
-          <main className="container mx-auto p-4 md:p-8 space-y-8 max-w-7xl animate-in fade-in duration-700">
+        <ScrollArea className="flex-1 bg-slate-50/60">
+          <main className="container mx-auto p-4 md:p-10 space-y-10 max-w-7xl animate-in fade-in duration-700">
             {/* Page Title Section */}
             <div className="flex flex-col gap-1">
               <h2 className="text-3xl font-extrabold tracking-tight text-primary">
@@ -39,20 +39,20 @@ export function Dashboard({ initialData }: DashboardProps) {
             {/* Main Content Tabs */}
             <Tabs defaultValue="overview" className="space-y-6">
               <div className="flex items-center justify-between">
-                <TabsList className="bg-muted p-1">
-                  <TabsTrigger value="overview" className="data-[state=active]:bg-white data-[state=active]:shadow-sm px-6">
+                <TabsList className="bg-slate-200/50 p-1.5 rounded-2xl">
+                  <TabsTrigger value="overview" className="data-[state=active]:bg-white data-[state=active]:shadow-sm px-6 rounded-xl font-bold text-slate-600 data-[state=active]:text-purple-700">
                     <LayoutDashboard className="h-4 w-4 mr-2" />
                     Overview
                   </TabsTrigger>
-                  <TabsTrigger value="meds" className="data-[state=active]:bg-white data-[state=active]:shadow-sm px-6">
+                  <TabsTrigger value="meds" className="data-[state=active]:bg-white data-[state=active]:shadow-sm px-6 rounded-xl font-bold text-slate-600 data-[state=active]:text-purple-700">
                     <BriefcaseMedical className="h-4 w-4 mr-2" />
                     Medications
                   </TabsTrigger>
-                  <TabsTrigger value="appointments" className="data-[state=active]:bg-white data-[state=active]:shadow-sm px-6">
+                  <TabsTrigger value="appointments" className="data-[state=active]:bg-white data-[state=active]:shadow-sm px-6 rounded-xl font-bold text-slate-600 data-[state=active]:text-purple-700">
                     <Calendar className="h-4 w-4 mr-2" />
                     Appointments
                   </TabsTrigger>
-                  <TabsTrigger value="routines" className="data-[state=active]:bg-white data-[state=active]:shadow-sm px-6">
+                  <TabsTrigger value="routines" className="data-[state=active]:bg-white data-[state=active]:shadow-sm px-6 rounded-xl font-bold text-slate-600 data-[state=active]:text-purple-700">
                     <ListChecks className="h-4 w-4 mr-2" />
                     Routines
                   </TabsTrigger>
@@ -64,8 +64,8 @@ export function Dashboard({ initialData }: DashboardProps) {
                   {/* Left Column: Task Timeline */}
                   <div className="lg:col-span-2 space-y-6">
                     <div className="space-y-1">
-                      <h3 className="text-lg font-bold tracking-tight">Today's Timeline</h3>
-                      <p className="text-xs text-muted-foreground">Up next within {initialData.houseName} residence</p>
+                      <h3 className="text-xl font-black tracking-tight text-slate-800">Today's Timeline</h3>
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Up next within {initialData.houseName} residence</p>
                     </div>
                     <TaskTimeline tasks={initialData.timelineTasks} />
                   </div>
@@ -73,19 +73,21 @@ export function Dashboard({ initialData }: DashboardProps) {
                   {/* Right Column: Alerts & Important Info */}
                   <div className="space-y-6">
                     <div className="space-y-1">
-                      <h3 className="text-lg font-bold tracking-tight">Active Alerts</h3>
-                      <p className="text-xs text-muted-foreground">Important house-wide or participant notices</p>
+                      <h3 className="text-xl font-black tracking-tight text-slate-800">Active Alerts</h3>
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Important house-wide notices</p>
                     </div>
                     
                     <div className="space-y-3">
                       {initialData.alerts.length > 0 ? (
                          initialData.alerts.map((alert: any) => (
-                           <div key={alert.id} className={`group relative rounded-xl border p-4 transition-all hover:bg-muted/50 ${alert.severity === "CRITICAL" ? "border-destructive bg-destructive/5" : "bg-card"}`}>
-                             <div className="flex gap-3">
-                               <Bell className={`h-5 w-5 mt-0.5 shrink-0 ${alert.severity === "CRITICAL" ? "text-destructive" : "text-primary"}`} />
+                           <div key={alert.id} className={`group relative rounded-2xl border p-4 transition-all hover:shadow-md ${alert.severity === "CRITICAL" ? "border-rose-200 bg-rose-50/50" : "bg-white border-slate-200/60 shadow-sm shadow-slate-200/50"}`}>
+                             <div className="flex gap-4">
+                               <div className={`mt-0.5 p-2 rounded-xl shrink-0 ${alert.severity === "CRITICAL" ? "bg-rose-100/50 text-rose-600" : "bg-purple-50 text-purple-600"}`}>
+                                 <Bell className="h-5 w-5" />
+                               </div>
                                <div className="space-y-1">
-                                 <h4 className={`text-sm font-bold ${alert.severity === "CRITICAL" ? "text-destructive" : ""}`}>{alert.participant} Alert</h4>
-                                 <p className={`text-xs leading-relaxed font-medium ${alert.severity === "CRITICAL" ? "text-destructive" : "text-muted-foreground"}`}>{alert.message}</p>
+                                 <h4 className={`text-sm font-black tracking-tight ${alert.severity === "CRITICAL" ? "text-rose-700" : "text-slate-800"}`}>{alert.participant} Alert</h4>
+                                 <p className={`text-xs leading-relaxed font-medium ${alert.severity === "CRITICAL" ? "text-rose-600/80" : "text-slate-500"}`}>{alert.message}</p>
                                </div>
                              </div>
                            </div>
