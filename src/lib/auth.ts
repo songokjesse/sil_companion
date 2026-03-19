@@ -15,6 +15,10 @@ export const auth = betterAuth({
                 type: "string",
                 required: false,
                 defaultValue: "SUPPORT_WORKER"
+            },
+            organizationId: {
+                type: "string",
+                required: false
             }
         }
     }
