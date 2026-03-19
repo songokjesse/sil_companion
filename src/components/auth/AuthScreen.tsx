@@ -6,34 +6,42 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ShieldCheck, Loader2 } from "lucide-react";
-import { motion } from "framer-motion";
+import { ShieldCheck, Loader2, ArrowRight, UserPlus, LogIn } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function AuthScreen() {
+  const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
     try {
-      const { error } = await authClient.signIn.email({
-        email,
-        password,
-      });
-
-      if (error) {
-        setError(error.message || "Invalid credentials. Please try again.");
+      if (isLogin) {
+        const { error: signInError } = await authClient.signIn.email({
+          email,
+          password,
+        });
+        if (signInError) throw new Error(signInError.message || "Invalid credentials");
       } else {
-        window.location.reload();
+        const { error: signUpError } = await authClient.signUp.email({
+          email,
+          password,
+          name,
+        });
+        if (signUpError) throw new Error(signUpError.message || "Sign up failed");
       }
+      
+      window.location.reload();
     } catch (err: any) {
-      console.error("Login Client Exception:", err);
-      setError(`Login Failed: ${err.message || "Unknown Network Error"}`);
+      console.error("Auth Exception:", err);
+      setError(err.message || "An unexpected error occurred");
     } finally {
       setLoading(false);
     }
@@ -54,17 +62,41 @@ export default function AuthScreen() {
           <h1 className="text-3xl font-extrabold tracking-tight text-slate-800">SIL Companion</h1>
         </div>
 
-        <Card className="border-none shadow-2xl shadow-slate-200">
-          <CardHeader className="space-y-1 text-center">
-            <CardTitle className="text-2xl font-bold tracking-tight">Staff Login</CardTitle>
-            <CardDescription className="font-medium text-muted-foreground">
-              Enter your credentials to access the dashboard
+        <Card className="border-none shadow-2xl shadow-slate-200 overflow-hidden relative">
+          <CardHeader className="space-y-1 text-center pb-8 border-b bg-slate-50/50">
+            <CardTitle className="text-3xl font-black tracking-tight text-slate-900">
+              {isLogin ? "Staff Portal" : "Team Registry"}
+            </CardTitle>
+            <CardDescription className="font-bold text-muted-foreground uppercase text-[10px] tracking-widest pt-1">
+              {isLogin ? "Authorized Access Only" : "Register join the Care Team"}
             </CardDescription>
           </CardHeader>
-          <form onSubmit={handleLogin}>
-            <CardContent className="space-y-4">
+          
+          <form onSubmit={handleAuth}>
+            <CardContent className="space-y-4 pt-8">
+              <AnimatePresence mode="wait">
+                {!isLogin && (
+                  <motion.div 
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    className="space-y-2 overflow-hidden"
+                  >
+                    <Label htmlFor="name">Full Name</Label>
+                    <Input 
+                       id="name" 
+                       placeholder="Enter your name" 
+                       required={!isLogin}
+                       value={name}
+                       onChange={(e) => setName(e.target.value)}
+                       className="h-11 border-slate-200 focus-visible:ring-purple-500 font-medium"
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
               <div className="space-y-2">
-                <Label htmlFor="email">Email Address</Label>
+                <Label htmlFor="email">Work Email</Label>
                 <Input 
                    id="email" 
                    type="email" 
@@ -72,13 +104,18 @@ export default function AuthScreen() {
                    required 
                    value={email}
                    onChange={(e) => setEmail(e.target.value)}
-                   className="h-11"
+                   className="h-11 border-slate-200 focus-visible:ring-purple-500 font-medium"
                 />
               </div>
+
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="password">Password</Label>
-                  <button type="button" className="text-xs font-bold text-purple-600 hover:underline">Forgot Password?</button>
+                  <Label htmlFor="password">Security Key</Label>
+                  {isLogin && (
+                    <button type="button" className="text-[10px] font-black uppercase tracking-tighter text-purple-600 hover:text-purple-800 transition-colors">
+                      Reset Access?
+                    </button>
+                  )}
                 </div>
                 <Input 
                    id="password" 
@@ -86,31 +123,56 @@ export default function AuthScreen() {
                    required 
                    value={password}
                    onChange={(e) => setPassword(e.target.value)}
-                   className="h-11"
+                   className="h-11 border-slate-200 focus-visible:ring-purple-500 font-medium"
                 />
               </div>
+
               {error && (
-                <div className="rounded-lg bg-destructive/10 p-3 text-xs font-bold text-destructive animate-in fade-in slide-in-from-top-2">
-                   {error}
-                </div>
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="rounded-xl bg-destructive/5 p-3 text-xs font-bold text-destructive border border-destructive/10 leading-relaxed"
+                >
+                   ⚠️ {error}
+                </motion.div>
               )}
             </CardContent>
-            <CardFooter>
+            
+            <CardFooter className="flex flex-col gap-4 pt-2">
               <Button 
                 type="submit" 
-                className="w-full h-11 text-sm font-bold bg-purple-600 hover:bg-purple-700 transition-all shadow-lg shadow-purple-100"
+                className="w-full h-12 text-sm font-black uppercase tracking-widest bg-purple-600 hover:bg-purple-700 transition-all shadow-xl shadow-purple-100 group"
                 disabled={loading}
               >
-                {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
-                Sign In to Dashboard
+                {loading ? (
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                ) : (
+                  <>
+                    {isLogin ? <LogIn className="h-4 w-4 mr-2" /> : <UserPlus className="h-4 w-4 mr-2" />}
+                    {isLogin ? "Unlock Dashboard" : "Create Account"}
+                    <ArrowRight className="h-4 w-4 ml-auto opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0" />
+                  </>
+                )}
               </Button>
+
+              <div className="text-center">
+                <button 
+                  type="button"
+                  onClick={() => { setIsLogin(!isLogin); setError(""); }}
+                  className="text-xs font-bold text-slate-500 hover:text-purple-600 transition-colors"
+                >
+                  {isLogin ? "New to the team? Register here" : "Return to Secure Login"}
+                </button>
+              </div>
             </CardFooter>
           </form>
         </Card>
         
-        <p className="mt-8 text-center text-xs font-medium text-muted-foreground">
-          SafeCare SIL Companion • Version 1.2 • Secure Staff Portal
-        </p>
+        <div className="mt-8 flex items-center justify-center gap-6">
+           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">SafeCare v1.5</p>
+           <div className="h-1 w-1 rounded-full bg-slate-300" />
+           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Support Portal</p>
+        </div>
       </motion.div>
     </div>
   );

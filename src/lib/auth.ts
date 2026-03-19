@@ -23,5 +23,22 @@ export const auth = betterAuth({
                 required: false
             }
         }
+    },
+    databaseHooks: {
+        user: {
+            create: {
+                before: async ({ user }) => {
+                    const org = await prisma.organization.findFirst();
+                    if (org) {
+                        return {
+                            data: {
+                                ...(user as any),
+                                organizationId: org.id
+                            }
+                        };
+                    }
+                }
+            }
+        }
     }
 });
