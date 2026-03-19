@@ -1,5 +1,3 @@
-"use client";
-
 import { Header } from "@/components/dashboard/Header";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { ParticipantHero } from "@/components/participant/ParticipantHero";
@@ -7,7 +5,6 @@ import { TaskTimeline } from "@/components/dashboard/TaskTimeline";
 import { AppointmentList } from "@/components/dashboard/AppointmentList";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { motion } from "framer-motion";
 import { 
   ChevronLeft, 
   History, 
@@ -19,15 +16,21 @@ import {
   ClipboardList
 } from "lucide-react";
 import Link from "next/link";
+import { getParticipantData } from "@/lib/actions";
 
-export default function ParticipantDetailPage() {
+export default async function ParticipantDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const data = await getParticipantData(id);
+
+  if (!data) return <div>Participant not found.</div>;
+
   return (
     <div className="flex h-screen w-full overflow-hidden bg-background">
       <Sidebar />
       <div className="flex flex-1 flex-col overflow-hidden">
-        <Header />
+        <Header houseName={data.participant.houseId} />
         <ScrollArea className="flex-1 bg-muted/20">
-          <main className="container mx-auto p-4 md:p-8 space-y-8 max-w-7xl animate-in slide-in-from-bottom-5 duration-700">
+          <main className="container mx-auto p-4 md:p-8 space-y-8 max-w-7xl animate-in fade-in slide-in-from-bottom-5 duration-700">
             {/* Navigation & Title Section */}
             <div className="flex flex-col gap-4">
               <Link
@@ -41,11 +44,11 @@ export default function ParticipantDetailPage() {
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                  <div className="space-y-1">
                     <h2 className="text-3xl font-extrabold tracking-tight text-primary">
-                       Liam Chen
+                       {data.participant.fullName}
                     </h2>
                     <p className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                        <MapPin className="h-4 w-4" />
-                       Resident Since October 2023 • Room 4
+                       Resident • {data.participant.houseId}
                     </p>
                  </div>
                  
@@ -61,7 +64,7 @@ export default function ParticipantDetailPage() {
             </div>
 
             {/* Profile Overview */}
-            <ParticipantHero />
+            <ParticipantHero participant={data.participant} />
 
             {/* Details Tabs */}
             <Tabs defaultValue="overview" className="space-y-6">
@@ -90,11 +93,10 @@ export default function ParticipantDetailPage() {
                        <div className="flex items-center justify-between">
                           <div className="space-y-1">
                              <h3 className="text-lg font-bold tracking-tight text-slate-800">Operational Log</h3>
-                             <p className="text-xs text-muted-foreground font-medium italic">Pending tasks for Liam today</p>
+                             <p className="text-xs text-muted-foreground font-medium italic">Pending tasks for {data.participant.preferredName} today</p>
                           </div>
-                          <button className="text-xs font-bold text-primary hover:underline">+ New Task</button>
                        </div>
-                       <TaskTimeline />
+                       <TaskTimeline tasks={data.timelineTasks} />
                     </div>
 
                     <div className="space-y-6">
@@ -112,10 +114,6 @@ export default function ParticipantDetailPage() {
                                 <h4 className="text-sm font-bold text-slate-800">Communication Prefs</h4>
                              </div>
                              <p className="text-xs text-muted-foreground leading-relaxed font-medium">Liam prefers using his Picture Board for food choices. Takes time to process verbal requests (allow 10 seconds).</p>
-                             <div className="flex flex-wrap gap-1.5">
-                                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">Patient</span>
-                                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">Visual Aids</span>
-                             </div>
                           </div>
 
                           <div className="rounded-2xl border bg-white p-5 space-y-4 shadow-sm overflow-hidden relative">
@@ -134,7 +132,7 @@ export default function ParticipantDetailPage() {
               </TabsContent>
 
               <TabsContent value="appointments" className="mt-0">
-                 <AppointmentList />
+                 <AppointmentList appointments={data.appointments} />
               </TabsContent>
 
               <TabsContent value="medical" className="flex h-[300px] items-center justify-center rounded-2xl border-2 border-dashed bg-muted/50 mt-0">

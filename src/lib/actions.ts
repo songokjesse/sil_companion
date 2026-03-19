@@ -81,3 +81,54 @@ export async function getDashboardData(houseName: string = "Maple House") {
     }
   };
 }
+
+export async function getParticipantData(id: string) {
+  const participant = await prisma.participant.findUnique({
+    where: { id },
+    include: {
+      medications: true,
+      routines: true,
+      appointments: true,
+      alerts: true,
+      house: true
+    }
+  });
+
+  if (!participant) return null;
+
+  const timelineTasks = [
+    ...participant.medications.map(m => ({
+      id: m.id,
+      participant: participant.fullName,
+      type: "Medication",
+      task: m.name + " " + m.dosage,
+      due: m.timeDue,
+      status: "Due Now",
+      critical: m.isCritical
+    })),
+    ...participant.routines.map(r => ({
+      id: r.id,
+      participant: participant.fullName,
+      type: "Routine",
+      task: r.title,
+      due: r.timeDue || "TBD",
+      status: "Upcoming",
+      critical: false
+    }))
+  ].sort((a,b) => (a.due || "").localeCompare(b.due || ""));
+
+  return {
+    participant,
+    timelineTasks,
+    appointments: participant.appointments.map(appt => ({
+       id: appt.id,
+       participant: participant.fullName,
+       title: appt.title,
+       time: appt.dateTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+       leave: appt.leaveTime?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) || "N/A",
+       location: appt.location || "TBD",
+       prep: appt.prepNotes || "None",
+       type: appt.type || "Other"
+    }))
+  };
+}
