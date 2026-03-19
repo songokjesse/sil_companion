@@ -31,8 +31,9 @@ export default function AuthScreen() {
       } else {
         window.location.reload();
       }
-    } catch (err) {
-      setError("An unexpected error occurred. Please try again.");
+    } catch (err: any) {
+      console.error("Login Client Exception:", err);
+      setError(`Login Failed: ${err.message || "Unknown Network Error"}`);
     } finally {
       setLoading(false);
     }
