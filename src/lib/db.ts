@@ -7,7 +7,9 @@ const globalForPrisma = globalThis as unknown as { prisma: PrismaClient | undefi
 function createPrismaClient() {
   const pool = new pg.Pool({ 
     connectionString: process.env.DATABASE_URL,
-    ssl: true
+    ssl: { rejectUnauthorized: false }, // Resolves Neon local Dev libpq SSL warnings
+    max: 15, // Increase pool slightly to accommodate standard dev bursts
+    idleTimeoutMillis: 30000,
   });
   const adapter = new PrismaPg(pool as any);
   

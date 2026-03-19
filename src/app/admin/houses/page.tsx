@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Building2, Plus, MoreVertical, Users, MapPin } from "lucide-react";
+import Link from "next/link";
 
 export default async function HouseManagement() {
   const houses = await prisma.house.findMany({
@@ -26,10 +27,10 @@ export default async function HouseManagement() {
                Manage organization residential properties, site capacity, and staff allocations.
             </p>
          </div>
-         <Button className="font-bold bg-purple-600 hover:bg-purple-700 shadow-lg shadow-purple-100 h-10">
+         <Link href="/admin/houses/new" className="inline-flex items-center justify-center rounded-md font-bold bg-purple-600 hover:bg-purple-700 shadow-lg shadow-purple-100 h-10 px-4 text-white text-sm transition-colors">
             <Plus className="h-4 w-4 mr-2" />
             Provision New House
-         </Button>
+         </Link>
       </div>
 
       <div className="rounded-2xl border bg-white shadow-sm overflow-hidden">

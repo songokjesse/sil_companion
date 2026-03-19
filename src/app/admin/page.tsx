@@ -10,11 +10,12 @@ import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default async function AdminDashboard() {
-  const counts = await prisma.$transaction([
+  const [houseCount, participantCount, userCount] = await Promise.all([
     prisma.house.count(),
     prisma.participant.count(),
     prisma.user.count(),
   ]);
+  const counts = [houseCount, participantCount, userCount];
 
   const stats = [
     { title: "Total Houses", value: counts[0], icon: Building2, href: "/admin/houses", color: "text-blue-600", bg: "bg-blue-50" },

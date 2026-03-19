@@ -184,3 +184,17 @@ export async function createParticipant(data: {
   
   return newParticipant;
 }
+
+export async function createHouse(name: string) {
+  const org = await prisma.organization.findFirst();
+  if (!org) throw new Error("No organization found to attach house");
+
+  const newHouse = await prisma.house.create({
+    data: {
+      name,
+      organizationId: org.id
+    }
+  });
+
+  return newHouse;
+}
