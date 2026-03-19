@@ -25,12 +25,12 @@ export default async function ParticipantDetailPage({ params }: { params: Promis
   if (!data) return <div>Participant not found.</div>;
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-background">
+    <div className="flex h-screen w-full overflow-hidden bg-slate-50/40">
       <Sidebar />
       <div className="flex flex-1 flex-col overflow-hidden">
         <Header houseName={data.participant.houseId} />
-        <ScrollArea className="flex-1 bg-muted/20">
-          <main className="container mx-auto p-4 md:p-8 space-y-8 max-w-7xl animate-in fade-in slide-in-from-bottom-5 duration-700">
+        <ScrollArea className="flex-1 bg-slate-50/60">
+          <main className="container mx-auto p-4 md:p-10 space-y-10 max-w-7xl animate-in fade-in slide-in-from-bottom-5 duration-700">
             {/* Navigation & Title Section */}
             <div className="flex flex-col gap-4">
               <Link
@@ -43,21 +43,21 @@ export default async function ParticipantDetailPage({ params }: { params: Promis
               
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                  <div className="space-y-1">
-                    <h2 className="text-3xl font-extrabold tracking-tight text-primary">
-                       {data.participant.fullName}
+                    <h2 className="text-3xl md:text-4xl font-black tracking-tight text-slate-800">
+                       Participant File
                     </h2>
-                    <p className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                       <MapPin className="h-4 w-4" />
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 flex items-center gap-2">
+                       <MapPin className="h-4 w-4 text-purple-600" />
                        Resident • {data.participant.houseId}
                     </p>
                  </div>
                  
                  <div className="flex gap-2">
-                    <button className="rounded-lg bg-white border border-input px-4 py-2 text-xs font-bold text-primary transition-all hover:bg-accent shadow-sm">
-                       Upload Document
+                    <button className="rounded-xl bg-white border border-slate-200/60 px-5 py-2.5 text-xs font-black uppercase tracking-widest text-slate-600 transition-all hover:bg-slate-50 shadow-sm shadow-slate-200/50">
+                       Upload Doc
                     </button>
-                    <button className="rounded-lg bg-primary px-4 py-2 text-xs font-bold text-white transition-all hover:bg-primary/90 shadow-sm">
-                       Quick Action
+                    <button className="rounded-xl bg-slate-900 px-5 py-2.5 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-slate-800 shadow-md shadow-slate-200/50">
+                       Log Action
                     </button>
                  </div>
               </div>
@@ -68,20 +68,20 @@ export default async function ParticipantDetailPage({ params }: { params: Promis
 
             {/* Details Tabs */}
             <Tabs defaultValue="overview" className="space-y-6">
-              <TabsList className="bg-muted p-1">
-                <TabsTrigger value="overview" className="data-[state=active]:bg-white data-[state=active]:shadow-sm px-8">
+              <TabsList className="bg-slate-200/50 p-1.5 rounded-2xl w-full md:w-auto flex flex-wrap h-auto">
+                <TabsTrigger value="overview" className="data-[state=active]:bg-white data-[state=active]:shadow-sm px-6 py-2.5 rounded-xl font-bold text-slate-600 data-[state=active]:text-purple-700">
                    <ListTodo className="h-4 w-4 mr-2" />
                    Today's Tasks
                 </TabsTrigger>
-                <TabsTrigger value="medical" className="data-[state=active]:bg-white data-[state=active]:shadow-sm px-8">
+                <TabsTrigger value="medical" className="data-[state=active]:bg-white data-[state=active]:shadow-sm px-6 py-2.5 rounded-xl font-bold text-slate-600 data-[state=active]:text-purple-700">
                    <Pill className="h-4 w-4 mr-2" />
                    Medication
                 </TabsTrigger>
-                <TabsTrigger value="appointments" className="data-[state=active]:bg-white data-[state=active]:shadow-sm px-8">
+                <TabsTrigger value="appointments" className="data-[state=active]:bg-white data-[state=active]:shadow-sm px-6 py-2.5 rounded-xl font-bold text-slate-600 data-[state=active]:text-purple-700">
                    <Stethoscope className="h-4 w-4 mr-2" />
                    Medical Care
                 </TabsTrigger>
-                <TabsTrigger value="history" className="data-[state=active]:bg-white data-[state=active]:shadow-sm px-8">
+                <TabsTrigger value="history" className="data-[state=active]:bg-white data-[state=active]:shadow-sm px-6 py-2.5 rounded-xl font-bold text-slate-600 data-[state=active]:text-purple-700">
                    <History className="h-4 w-4 mr-2" />
                    Timeline
                 </TabsTrigger>
@@ -92,8 +92,8 @@ export default async function ParticipantDetailPage({ params }: { params: Promis
                     <div className="lg:col-span-2 space-y-6">
                        <div className="flex items-center justify-between">
                           <div className="space-y-1">
-                             <h3 className="text-lg font-bold tracking-tight text-slate-800">Operational Log</h3>
-                             <p className="text-xs text-muted-foreground font-medium italic">Pending tasks for {data.participant.preferredName} today</p>
+                             <h3 className="text-xl font-black tracking-tight text-slate-800">Operational Log</h3>
+                             <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Pending tasks today</p>
                           </div>
                        </div>
                        <TaskTimeline tasks={data.timelineTasks} />
@@ -101,30 +101,30 @@ export default async function ParticipantDetailPage({ params }: { params: Promis
 
                     <div className="space-y-6">
                        <div className="space-y-1">
-                          <h3 className="text-lg font-bold tracking-tight text-slate-800">Support Context</h3>
-                          <p className="text-xs text-muted-foreground font-medium italic">Practical info for staff</p>
+                          <h3 className="text-xl font-black tracking-tight text-slate-800">Support Context</h3>
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Practical info for staff</p>
                        </div>
                        
                        <div className="space-y-4">
-                          <div className="rounded-2xl border bg-white p-5 space-y-4 shadow-sm">
-                             <div className="flex items-center gap-3">
-                                <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0 border border-indigo-100">
-                                   <Users className="h-4 w-4 text-indigo-600" />
+                          <div className="rounded-2xl border border-slate-200/60 bg-white p-6 space-y-4 shadow-sm shadow-slate-200/50">
+                             <div className="flex items-center gap-4">
+                                <div className="h-10 w-10 rounded-2xl bg-indigo-50 flex items-center justify-center shrink-0 border border-indigo-100">
+                                   <Users className="h-5 w-5 text-indigo-600" />
                                 </div>
-                                <h4 className="text-sm font-bold text-slate-800">Communication Prefs</h4>
+                                <h4 className="text-sm font-black text-slate-800 tracking-tight">CommunicationPref</h4>
                              </div>
-                             <p className="text-xs text-muted-foreground leading-relaxed font-medium">Liam prefers using his Picture Board for food choices. Takes time to process verbal requests (allow 10 seconds).</p>
+                             <p className="text-xs text-slate-500 leading-relaxed font-medium">Liam prefers using his Picture Board for food choices. Takes time to process verbal requests (allow 10 seconds).</p>
                           </div>
 
-                          <div className="rounded-2xl border bg-white p-5 space-y-4 shadow-sm overflow-hidden relative">
+                          <div className="rounded-2xl border border-slate-200/60 bg-white p-6 space-y-4 shadow-sm shadow-slate-200/50 overflow-hidden relative">
                              <div className="absolute top-0 right-0 h-16 w-16 bg-blue-50 -mr-8 -mt-8 rounded-full blur-2xl" />
-                             <div className="flex items-center gap-3 relative z-10">
-                                <div className="h-8 w-8 rounded-lg bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100">
-                                   <ClipboardList className="h-4 w-4 text-blue-600" />
+                             <div className="flex items-center gap-4 relative z-10">
+                                <div className="h-10 w-10 rounded-2xl bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100">
+                                   <ClipboardList className="h-5 w-5 text-blue-600" />
                                 </div>
-                                <h4 className="text-sm font-bold text-slate-800 relative z-10">Escort Requirements</h4>
+                                <h4 className="text-sm font-black text-slate-800 tracking-tight relative z-10">Escort Requirement</h4>
                              </div>
-                             <p className="text-xs text-muted-foreground leading-relaxed font-medium relative z-10">2 staff required for all external appointments. Bring seizure management pack (red bag) for all outings.</p>
+                             <p className="text-xs text-slate-500 leading-relaxed font-medium relative z-10">2 staff required for all external appointments. Bring seizure management pack (red bag) for all outings.</p>
                           </div>
                        </div>
                     </div>

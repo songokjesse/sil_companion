@@ -132,3 +132,24 @@ export async function getParticipantData(id: string) {
     }))
   };
 }
+
+export async function getParticipantsList(houseName: string = "Maple House") {
+  const house = await prisma.house.findFirst({
+    where: { name: houseName },
+    include: {
+      participants: {
+        select: {
+          id: true,
+          fullName: true,
+          preferredName: true,
+          photoUrl: true,
+          houseId: true,
+          // Explicitly NOT selecting dob, medicalAlerts, etc. for list-level privacy
+        }
+      }
+    }
+  });
+
+  if (!house) return [];
+  return house.participants;
+}
