@@ -150,6 +150,35 @@ export async function getParticipantsList(houseName: string = "Maple House") {
     }
   });
 
-  if (!house) return [];
-  return house.participants;
+}
+
+export async function getHouses() {
+  const houses = await prisma.house.findMany({
+    select: {
+      id: true,
+      name: true
+    }
+  });
+  return houses;
+}
+
+export async function createParticipant(data: {
+  fullName: string;
+  preferredName?: string;
+  dob: Date;
+  houseId: string;
+}) {
+  // In a Minimal Data model, we only capture the essentials
+  // required for the localized companion app to function.
+  const newParticipant = await prisma.participant.create({
+    data: {
+      fullName: data.fullName,
+      preferredName: data.preferredName,
+      dob: data.dob,
+      houseId: data.houseId,
+      // Leaving medicalAlerts blank intentionally to enforce EHR sync policy
+    }
+  });
+  
+  return newParticipant;
 }

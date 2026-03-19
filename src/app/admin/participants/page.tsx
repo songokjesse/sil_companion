@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { UserPlus, MoreVertical, ShieldCheck, UserCircle2, Filter, Link as LinkIcon, Lock } from "lucide-react";
+import Link from "next/link";
 
 export default async function ParticipantManagement() {
   const participants = await prisma.participant.findMany({
@@ -31,10 +32,10 @@ export default async function ParticipantManagement() {
                <Filter className="h-4 w-4 mr-2" />
                Filter
             </Button>
-            <Button className="font-bold bg-purple-600 hover:bg-purple-700 shadow-lg shadow-purple-100">
-               <UserPlus className="h-4 w-4 mr-2" />
-               Register New Resident
-            </Button>
+            <Link href="/admin/participants/new" className="inline-flex items-center justify-center rounded-md font-bold bg-purple-600 px-4 py-2 hover:bg-purple-700 shadow-lg shadow-purple-100 text-white transition-colors text-sm">
+                 <UserPlus className="h-4 w-4 mr-2" />
+                 Register New Resident
+            </Link>
          </div>
       </div>
 
