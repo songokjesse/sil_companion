@@ -150,6 +150,8 @@ export async function getParticipantsList(houseName: string = "Maple House") {
     }
   });
 
+  if (!house) return [];
+  return house.participants;
 }
 
 export async function getHouses() {
