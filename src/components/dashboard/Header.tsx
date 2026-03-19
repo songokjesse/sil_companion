@@ -1,17 +1,20 @@
 "use client";
 
-import { Bell, Search, UserCircle } from "lucide-react";
+import { Bell, Search } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 
-export function Header() {
+interface HeaderProps {
+   houseName?: string;
+}
+
+export function Header({ houseName = "Maple House" }: HeaderProps) {
   return (
     <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b bg-background/95 px-6 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex items-center gap-4">
         <h1 className="text-xl font-bold tracking-tight text-primary">SIL Companion</h1>
         <div className="hidden h-6 w-px bg-border sm:block" />
         <p className="hidden text-sm font-medium text-muted-foreground sm:block">
-          Maple House Dashboard
+          {houseName} Dashboard
         </p>
       </div>
 
