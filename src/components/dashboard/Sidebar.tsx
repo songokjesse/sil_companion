@@ -34,7 +34,7 @@ export function Sidebar() {
   return (
     <aside className="sticky top-0 h-screen w-80 flex flex-col border-r bg-muted/40 p-4 transition-all overflow-y-auto">
       <div className="flex items-center gap-3 mb-8 ml-3">
-        <div className="h-9 w-9 flex items-center justify-center rounded-xl bg-orange-600 shadow-lg shadow-orange-200">
+        <div className="h-9 w-9 flex items-center justify-center rounded-xl bg-purple-600 shadow-lg shadow-purple-200">
           <ShieldCheck className="h-6 w-6 text-white" />
         </div>
         <h2 className="text-xl font-bold tracking-tight text-primary">SILCompanion</h2>
@@ -52,10 +52,10 @@ export function Sidebar() {
           >
             <item.icon className={cn(
               "h-5 w-5 text-muted-foreground transition-colors group-hover:text-primary",
-              item.active && "text-orange-600"
+              item.active && "text-purple-600"
             )} />
             {item.label}
-            {item.active && <div className="ml-auto h-1.5 w-1.5 rounded-full bg-orange-600" />}
+            {item.active && <div className="ml-auto h-1.5 w-1.5 rounded-full bg-purple-600" />}
           </button>
         ))}
       </nav>

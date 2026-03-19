@@ -108,8 +108,8 @@ export default async function ParticipantDetailPage({ params }: { params: Promis
                        <div className="space-y-4">
                           <div className="rounded-2xl border bg-white p-5 space-y-4 shadow-sm">
                              <div className="flex items-center gap-3">
-                                <div className="h-8 w-8 rounded-lg bg-orange-50 flex items-center justify-center shrink-0 border border-orange-100">
-                                   <Users className="h-4 w-4 text-orange-600" />
+                                <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0 border border-indigo-100">
+                                   <Users className="h-4 w-4 text-indigo-600" />
                                 </div>
                                 <h4 className="text-sm font-bold text-slate-800">Communication Prefs</h4>
                              </div>

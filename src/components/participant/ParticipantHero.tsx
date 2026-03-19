@@ -43,7 +43,7 @@ export function ParticipantHero({ participant }: ParticipantHeroProps) {
 
           <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-2">
             {participant.medicalAlerts?.split(',').map((alert: string, i: number) => (
-               <div key={i} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-50 text-orange-700 text-xs font-bold border border-orange-100">
+               <div key={i} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-50 text-purple-700 text-xs font-bold border border-purple-100">
                   <HeartPulse className="h-3.5 w-3.5" />
                   {alert.trim()}
                </div>

@@ -12,10 +12,10 @@ const iconMap: Record<string, any> = {
 };
 
 const colorMap: Record<string, any> = {
-  blue: { text: "text-blue-600", bg: "bg-blue-50" },
+  blue: { text: "text-purple-600", bg: "bg-purple-50" },
   primary: { text: "text-primary", bg: "bg-primary/10" },
   red: { text: "text-destructive", bg: "bg-destructive/10" },
-  green: { text: "text-green-600", bg: "bg-green-50" }
+  green: { text: "text-indigo-600", bg: "bg-indigo-50" }
 };
 
 interface SummaryCardsProps {

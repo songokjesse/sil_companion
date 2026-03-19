@@ -61,7 +61,7 @@ export function AppointmentList({ appointments }: AppointmentListProps) {
                  <MapPin className="h-3.5 w-3.5" />
                  <span className="truncate">{appt.location}</span>
                </div>
-               <div className="rounded-lg bg-blue-50/50 p-2.5 text-[11px] border border-blue-100/50 leading-relaxed italic text-blue-900/80">
+               <div className="rounded-lg bg-purple-50/50 p-2.5 text-[11px] border border-purple-100/50 leading-relaxed italic text-purple-900/80">
                  <span className="font-bold uppercase tracking-widest text-[9px] not-italic mr-1.5">Prep:</span>
                  {appt.prep}
                </div>
