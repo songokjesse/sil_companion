@@ -1,50 +1,73 @@
 "use client";
 
 import { 
-  BarChart, 
   Calendar, 
   Clock, 
-  Home, 
   LayoutDashboard, 
   Settings, 
   Users,
   BriefcaseMedical,
   ShieldCheck,
-  ChevronRight
+  ChevronRight,
+  LogOut,
+  Building2,
+  HardHat,
+  LayoutGrid
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
+import { authClient } from "@/lib/auth-client";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-const menuItems = [
-  { icon: LayoutDashboard, label: "Today Dashboard", active: true },
-  { icon: Users, label: "Participants", active: false },
-  { icon: BriefcaseMedical, label: "Medications", active: false },
-  { icon: Calendar, label: "Appointments", active: false },
-  { icon: Clock, label: "Routines", active: false },
-  { icon: ShieldCheck, label: "Alerts", active: false },
-];
+export function Sidebar({ isAdminView = false }: { isAdminView?: boolean }) {
+  const pathname = usePathname();
+  const session = authClient.useSession();
+  const user = session?.data?.user as any;
 
-const houses = [
-  { name: "Maple House", active: true },
-  { name: "Oak Residence", active: false },
-  { name: "Willow Grove", active: false },
-];
+  const menuItems = isAdminView ? [
+    { icon: LayoutGrid, label: "Admin Console", href: "/admin", active: pathname === "/admin" },
+    { icon: Building2, label: "Manage Houses", href: "/admin/houses", active: pathname.startsWith("/admin/houses") },
+    { icon: Users, label: "Manage Participants", href: "/admin/participants", active: pathname.startsWith("/admin/participants") },
+    { icon: HardHat, label: "Staff Management", href: "/admin/users", active: pathname.startsWith("/admin/users") },
+  ] : [
+    { icon: LayoutDashboard, label: "Today Dashboard", href: "/", active: pathname === "/" },
+    { icon: Users, label: "Participants", href: "/participants", active: pathname.startsWith("/participants") },
+    { icon: BriefcaseMedical, label: "Medications", href: "/medications", active: pathname.startsWith("/medications") },
+    { icon: Calendar, label: "Appointments", href: "/appointments", active: pathname.startsWith("/appointments") },
+    { icon: Clock, label: "Routines", href: "/routines", active: pathname.startsWith("/routines") },
+  ];
 
-export function Sidebar() {
+  const handleSignOut = async () => {
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          window.location.href = "/";
+        }
+      }
+    });
+  };
+
   return (
     <aside className="sticky top-0 h-screen w-80 flex flex-col border-r bg-muted/40 p-4 transition-all overflow-y-auto">
       <div className="flex items-center gap-3 mb-8 ml-3">
         <div className="h-9 w-9 flex items-center justify-center rounded-xl bg-purple-600 shadow-lg shadow-purple-200">
           <ShieldCheck className="h-6 w-6 text-white" />
         </div>
-        <h2 className="text-xl font-bold tracking-tight text-primary">SILCompanion</h2>
+        <div>
+           <h2 className="text-xl font-bold tracking-tight text-primary leading-none">SILCompanion</h2>
+           {isAdminView && <span className="text-[10px] font-black uppercase text-purple-600 tracking-widest">Admin Panel</span>}
+        </div>
       </div>
 
       <nav className="space-y-1">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60 mb-2 px-3">Main Menu</p>
+        <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60 mb-2 px-3">
+           {isAdminView ? "Admin Controls" : "Main Menu"}
+        </p>
         {menuItems.map((item) => (
-          <button
+          <Link
             key={item.label}
+            href={item.href}
             className={cn(
               "group flex w-full items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-semibold transition-all hover:bg-muted active:scale-[0.98]",
               item.active && "bg-white shadow-sm shadow-black/5 text-primary"
@@ -56,36 +79,43 @@ export function Sidebar() {
             )} />
             {item.label}
             {item.active && <div className="ml-auto h-1.5 w-1.5 rounded-full bg-purple-600" />}
-          </button>
+          </Link>
         ))}
+
+        {user?.role === "ADMIN" && !isAdminView && (
+           <Link
+             href="/admin"
+             className="group flex w-full items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-black text-purple-600 hover:bg-purple-50 transition-all mt-4 border border-purple-100 border-dashed"
+           >
+             <Settings className="h-5 w-5" />
+             Switch to Admin Mode
+           </Link>
+        )}
+        
+        {isAdminView && (
+           <Link
+             href="/"
+             className="group flex w-full items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-black text-slate-600 hover:bg-slate-50 transition-all mt-4 border border-slate-200 border-dashed"
+           >
+             <LayoutDashboard className="h-5 w-5" />
+             Exit Admin Mode
+           </Link>
+        )}
       </nav>
 
-      <div className="mt-8">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60 mb-2 px-3">Your Houses</p>
-        <div className="space-y-1">
-          {houses.map((house) => (
-            <button
-              key={house.name}
-              className={cn(
-                "group flex w-full items-center justify-between rounded-lg px-4 py-2 text-sm font-medium transition-all hover:bg-muted active:scale-[0.98]",
-                house.active ? "text-primary bg-muted/50" : "text-muted-foreground"
-              )}
-            >
-              <span className="truncate">{house.name}</span>
-              <ChevronRight className={cn(
-                "h-4 w-4 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100",
-                house.active && "opacity-100 text-primary"
-              )} />
-            </button>
-          ))}
-        </div>
-      </div>
-
+      {/* Footer Items */}
       <div className="mt-auto pt-6">
         <Separator className="mb-4 opacity-50" />
         <button className="group flex w-full items-center gap-3 rounded-lg px-4 py-2 text-sm font-medium text-muted-foreground transition-all hover:bg-muted hover:text-primary">
           <Settings className="h-5 w-5 transition-transform group-hover:rotate-45" />
-          Settings
+          General Settings
+        </button>
+        <button 
+           onClick={handleSignOut}
+           className="group flex w-full items-center gap-3 rounded-lg px-4 py-2 text-sm font-bold text-destructive/80 transition-all hover:bg-destructive/10 hover:text-destructive"
+        >
+          <LogOut className="h-5 w-5" />
+          Logout
         </button>
       </div>
     </aside>

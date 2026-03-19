@@ -32,7 +32,7 @@ async function main() {
     },
   });
 
-  // 3. Create Staff User
+  // 3. Create Staff Users
   const staff = await prisma.user.create({
     data: {
       name: "John Staff",
@@ -40,6 +40,15 @@ async function main() {
       role: Role.SUPPORT_WORKER,
       organizationId: org.id,
       houses: { connect: { id: house.id } },
+    },
+  });
+
+  const admin = await prisma.user.create({
+    data: {
+      name: "System Admin",
+      email: "admin@safecare.com",
+      role: Role.ADMIN,
+      organizationId: org.id,
     },
   });
 
