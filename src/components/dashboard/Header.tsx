@@ -2,6 +2,7 @@
 
 import { Bell, Search } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Link from "next/link";
 
 interface HeaderProps {
    houseName?: string;
@@ -28,10 +29,10 @@ export function Header({ houseName = "Maple House" }: HeaderProps) {
           />
         </div>
         
-        <button className="relative rounded-full p-2.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600 dark:text-slate-300 transition-colors">
+        <Link href="/alerts" className="relative rounded-full p-2.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-900 dark:hover:text-slate-300 transition-colors">
           <Bell className="h-5 w-5" />
-          <span className="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-destructive ring-2 ring-white" />
-        </button>
+          <span className="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-destructive ring-2 ring-white dark:ring-slate-950 animate-pulse" />
+        </Link>
 
         <Avatar className="h-10 w-10 cursor-pointer ring-2 ring-white shadow-sm">
           <AvatarImage src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=128&h=128&dpr=2" />

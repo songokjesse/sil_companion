@@ -410,3 +410,35 @@ export async function createAppointment(data: {
     data
   });
 }
+
+export async function getActiveHouseAlerts(houseName: string = "Maple House") {
+  return await prisma.participantAlert.findMany({
+    where: {
+      participant: { house: { name: houseName } }
+    },
+    include: {
+      participant: { select: { fullName: true, photoUrl: true } }
+    },
+    orderBy: { createdAt: 'desc' },
+    take: 20
+  });
+}
+
+export async function getAllAlertsAdmin() {
+  return await prisma.participantAlert.findMany({
+    include: {
+      participant: { select: { fullName: true, house: { select: { name: true } } } }
+    },
+    orderBy: { createdAt: 'desc' }
+  });
+}
+
+export async function createAlert(data: {
+  participantId: string;
+  message: string;
+  severity: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+}) {
+  return await prisma.participantAlert.create({
+    data
+  });
+}

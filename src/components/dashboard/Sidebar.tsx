@@ -13,7 +13,8 @@ import {
   Building2,
   HardHat,
   LayoutGrid,
-  ListChecks
+  ListChecks,
+  AlertTriangle
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
@@ -33,6 +34,7 @@ export function Sidebar({ isAdminView = false }: { isAdminView?: boolean }) {
     { icon: BriefcaseMedical, label: "Manage Medications", href: "/admin/medications", active: pathname.startsWith("/admin/medications") },
     { icon: Calendar, label: "Manage Appointments", href: "/admin/appointments", active: pathname.startsWith("/admin/appointments") },
     { icon: ListChecks, label: "Manage Routines", href: "/admin/routines", active: pathname.startsWith("/admin/routines") },
+    { icon: AlertTriangle, label: "Manage Alerts", href: "/admin/alerts", active: pathname.startsWith("/admin/alerts") },
     { icon: HardHat, label: "Staff Management", href: "/admin/users", active: pathname.startsWith("/admin/users") },
   ] : [
     { icon: LayoutDashboard, label: "Today Dashboard", href: "/", active: pathname === "/" },
