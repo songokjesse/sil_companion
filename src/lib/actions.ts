@@ -295,3 +295,55 @@ export async function getAllParticipantsAdmin() {
     orderBy: { fullName: 'asc' }
   });
 }
+
+export async function getUpcomingAppointments(houseName: string = "Maple House") {
+  const startOfDay = new Date();
+  startOfDay.setHours(0, 0, 0, 0);
+
+  return await prisma.appointment.findMany({
+    where: {
+      participant: { house: { name: houseName } },
+      dateTime: { gte: startOfDay }
+    },
+    include: {
+      participant: { select: { id: true, fullName: true, photoUrl: true, preferredName: true } }
+    },
+    orderBy: { dateTime: 'asc' }
+  });
+}
+
+export async function updateAppointmentStatus(appointmentId: string, status: "UPCOMING" | "ATTENDED" | "CANCELLED" | "RESCHEDULED") {
+  return await prisma.appointment.update({
+    where: { id: appointmentId },
+    data: { status }
+  });
+}
+
+export async function getAllAppointmentsAdmin() {
+  return await prisma.appointment.findMany({
+    include: {
+      participant: {
+        select: { fullName: true, house: { select: { name: true } } }
+      }
+    },
+    orderBy: { dateTime: 'asc' }
+  });
+}
+
+export async function createAppointment(data: {
+  participantId: string;
+  title: string;
+  type?: string;
+  providerName?: string;
+  location?: string;
+  dateTime: Date;
+  leaveTime?: Date;
+  transportReq: boolean;
+  transportNotes?: string;
+  escortReq: boolean;
+  prepNotes?: string;
+}) {
+  return await prisma.appointment.create({
+    data
+  });
+}

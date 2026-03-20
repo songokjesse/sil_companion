@@ -30,6 +30,7 @@ export function Sidebar({ isAdminView = false }: { isAdminView?: boolean }) {
     { icon: Building2, label: "Manage Houses", href: "/admin/houses", active: pathname.startsWith("/admin/houses") },
     { icon: Users, label: "Manage Participants", href: "/admin/participants", active: pathname.startsWith("/admin/participants") },
     { icon: BriefcaseMedical, label: "Manage Medications", href: "/admin/medications", active: pathname.startsWith("/admin/medications") },
+    { icon: Calendar, label: "Manage Appointments", href: "/admin/appointments", active: pathname.startsWith("/admin/appointments") },
     { icon: HardHat, label: "Staff Management", href: "/admin/users", active: pathname.startsWith("/admin/users") },
   ] : [
     { icon: LayoutDashboard, label: "Today Dashboard", href: "/", active: pathname === "/" },
