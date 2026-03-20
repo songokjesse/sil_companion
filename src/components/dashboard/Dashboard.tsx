@@ -1,7 +1,7 @@
 "use client";
 
 import { Header } from "./Header";
-import { Sidebar } from "./Sidebar";
+import { SidebarClient } from "./SidebarClient";
 import { SummaryCards } from "./SummaryCards";
 import { TaskTimeline } from "./TaskTimeline";
 import { AppointmentList } from "./AppointmentList";
@@ -16,7 +16,7 @@ interface DashboardProps {
 export function Dashboard({ initialData }: DashboardProps) {
   return (
     <div className="flex h-[100dvh] w-full overflow-hidden bg-slate-50 dark:bg-slate-900/40">
-      <Sidebar />
+      <SidebarClient medicationsEnabled={initialData.medicationsEnabled !== false} />
       <div className="flex flex-1 flex-col overflow-hidden">
         <Header houseName={initialData.houseName} />
         <div className="flex-1 overflow-y-auto min-h-0 bg-slate-50 dark:bg-slate-900/60">
@@ -43,12 +43,12 @@ export function Dashboard({ initialData }: DashboardProps) {
                     <LayoutDashboard className="h-4 w-4 mr-2" />
                     Overview
                   </TabsTrigger>
-                  {initialData.medicationsEnabled !== false && (
+                  {initialData.medicationsEnabled !== false ? (
                     <TabsTrigger value="meds" className="data-[state=active]:bg-white dark:bg-slate-950 data-[state=active]:shadow-sm px-6 rounded-xl font-bold text-slate-600 dark:text-slate-300 data-[state=active]:text-purple-700">
                       <BriefcaseMedical className="h-4 w-4 mr-2" />
                       Medications
                     </TabsTrigger>
-                  )}
+                  ) : null}
                   <TabsTrigger value="appointments" className="data-[state=active]:bg-white dark:bg-slate-950 data-[state=active]:shadow-sm px-6 rounded-xl font-bold text-slate-600 dark:text-slate-300 data-[state=active]:text-purple-700">
                     <Calendar className="h-4 w-4 mr-2" />
                     Appointments
