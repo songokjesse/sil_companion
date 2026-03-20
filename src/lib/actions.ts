@@ -13,9 +13,11 @@ export async function getDashboardData(houseName: string = "Maple House") {
           appointments: {
             where: {
                dateTime: {
-                  gte: new Date(new Date().setHours(0, 0, 0, 0)),
-                  lte: new Date(new Date().setHours(23, 59, 59, 999))
+                  gte: new Date(Date.now() - 24 * 60 * 60 * 1000) // Last 24 hours + future
                }
+            },
+            orderBy: {
+               dateTime: 'asc'
             }
           },
           alerts: true,
@@ -366,7 +368,7 @@ export async function getUpcomingAppointments(houseName: string = "Maple House")
   return await prisma.appointment.findMany({
     where: {
       participant: { house: { name: houseName } },
-      dateTime: { gte: startOfDay }
+      dateTime: { gte: new Date(Date.now() - 24 * 60 * 60 * 1000) } // Account for timezones/recent logs
     },
     include: {
       participant: { select: { id: true, fullName: true, photoUrl: true, preferredName: true } }
