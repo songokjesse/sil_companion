@@ -1,7 +1,6 @@
 import { getMedicationsForToday } from "@/lib/actions";
 import { Header } from "@/components/dashboard/Header";
 import { Sidebar } from "@/components/dashboard/Sidebar";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { BriefcaseMedical, Pill, Info } from "lucide-react";
 import MedicationClientList from "./MedicationClientList";
 
@@ -27,12 +26,12 @@ export default async function MedicationsPage() {
   })).filter(s => s.meds.length > 0);
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-slate-50/40 dark:bg-slate-950/40">
+    <div className="flex h-[100dvh] w-full overflow-hidden bg-slate-50/40 dark:bg-slate-950/40">
       <Sidebar />
       <div className="flex flex-1 flex-col overflow-hidden">
         <Header houseName="Maple House" />
-        <ScrollArea className="flex-1 bg-slate-50/60 dark:bg-slate-900/40">
-          <main className="container mx-auto p-4 md:p-10 space-y-10 max-w-5xl animate-in fade-in slide-in-from-bottom-5 duration-700">
+        <div className="flex-1 overflow-y-auto min-h-0 bg-slate-50/60 dark:bg-slate-900/40">
+          <main className="container mx-auto p-4 pb-28 md:p-10 md:pb-10 space-y-10 max-w-5xl animate-in fade-in slide-in-from-bottom-5 duration-700">
             {/* Title Section */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                <div className="space-y-1">
@@ -85,7 +84,7 @@ export default async function MedicationsPage() {
             </div>
 
           </main>
-        </ScrollArea>
+        </div>
       </div>
     </div>
   );

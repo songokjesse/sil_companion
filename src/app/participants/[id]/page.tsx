@@ -3,7 +3,6 @@ import { Sidebar } from "@/components/dashboard/Sidebar";
 import { ParticipantHero } from "@/components/participant/ParticipantHero";
 import { TaskTimeline } from "@/components/dashboard/TaskTimeline";
 import { AppointmentList } from "@/components/dashboard/AppointmentList";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   ChevronLeft, 
@@ -25,12 +24,12 @@ export default async function ParticipantDetailPage({ params }: { params: Promis
   if (!data) return <div>Participant not found.</div>;
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-slate-50 dark:bg-slate-900/40">
+    <div className="flex h-[100dvh] w-full overflow-hidden bg-slate-50 dark:bg-slate-900/40">
       <Sidebar />
       <div className="flex flex-1 flex-col overflow-hidden">
-        <Header houseName={data.participant.houseId} />
-        <ScrollArea className="flex-1 bg-slate-50 dark:bg-slate-900/60">
-          <main className="container mx-auto p-4 md:p-10 space-y-10 max-w-7xl animate-in fade-in slide-in-from-bottom-5 duration-700">
+        <Header houseName={data.participant.house?.name || "Participant View"} />
+        <div className="flex-1 overflow-y-auto min-h-0 bg-slate-50 dark:bg-slate-900/60">
+          <main className="container mx-auto p-4 pb-28 md:p-10 md:pb-10 space-y-10 max-w-5xl animate-in fade-in duration-700">
             {/* Navigation & Title Section */}
             <div className="flex flex-col gap-4">
               <Link
@@ -148,7 +147,7 @@ export default async function ParticipantDetailPage({ params }: { params: Promis
               </TabsContent>
             </Tabs>
           </main>
-        </ScrollArea>
+        </div>
       </div>
     </div>
   );

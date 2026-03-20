@@ -18,7 +18,7 @@ export default async function Home() {
   if (!data) return <div>No House Data Found. Please Seed Database.</div>;
 
   return (
-    <main className="min-h-screen bg-background">
+    <>
       <Dashboard initialData={{
         ...data,
         metrics: [
@@ -28,6 +28,6 @@ export default async function Home() {
           { title: "Completed", value: data.metrics.completed, icon: "check", color: "green" },
         ]
       }} />
-    </main>
+    </>
   );
 }

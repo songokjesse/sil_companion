@@ -3,7 +3,6 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { Header } from "@/components/dashboard/Header";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { ShieldAlert } from "lucide-react";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -25,15 +24,15 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   }
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-background">
+    <div className="flex h-[100dvh] w-full overflow-hidden bg-background">
       <Sidebar isAdminView />
       <div className="flex flex-1 flex-col overflow-hidden">
         <Header houseName="Administrative Portal" />
-        <ScrollArea className="flex-1 bg-muted/20">
-          <main className="container mx-auto p-4 md:p-8 space-y-8 max-w-7xl">
+        <div className="flex-1 overflow-y-auto min-h-0 bg-muted/20">
+          <main className="container mx-auto p-4 pb-28 md:p-8 md:pb-8 space-y-8 max-w-7xl">
             {children}
           </main>
-        </ScrollArea>
+        </div>
       </div>
     </div>
   );

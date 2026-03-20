@@ -6,7 +6,6 @@ import { SummaryCards } from "./SummaryCards";
 import { TaskTimeline } from "./TaskTimeline";
 import { AppointmentList } from "./AppointmentList";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { motion } from "framer-motion";
 import { Bell, BriefcaseMedical, Calendar, LayoutDashboard, ListChecks } from "lucide-react";
 
@@ -16,12 +15,12 @@ interface DashboardProps {
 
 export function Dashboard({ initialData }: DashboardProps) {
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-slate-50 dark:bg-slate-900/40">
+    <div className="flex h-[100dvh] w-full overflow-hidden bg-slate-50 dark:bg-slate-900/40">
       <Sidebar />
       <div className="flex flex-1 flex-col overflow-hidden">
         <Header houseName={initialData.houseName} />
-        <ScrollArea className="flex-1 bg-slate-50 dark:bg-slate-900/60">
-          <main className="container mx-auto p-4 md:p-10 space-y-10 max-w-7xl animate-in fade-in duration-700">
+        <div className="flex-1 overflow-y-auto min-h-0 bg-slate-50 dark:bg-slate-900/60">
+          <main className="container mx-auto p-4 pb-28 md:p-10 md:pb-10 space-y-10 max-w-7xl animate-in fade-in duration-700">
             {/* Page Title Section */}
             <div className="flex flex-col gap-1">
               <h2 className="text-3xl font-extrabold tracking-tight text-primary">
@@ -105,7 +104,7 @@ export function Dashboard({ initialData }: DashboardProps) {
               </TabsContent>
             </Tabs>
           </main>
-        </ScrollArea>
+        </div>
       </div>
     </div>
   );
