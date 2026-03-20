@@ -8,12 +8,16 @@ import { AppointmentList } from "./AppointmentList";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { motion } from "framer-motion";
 import { Bell, BriefcaseMedical, Calendar, LayoutDashboard, ListChecks } from "lucide-react";
+import { useState, useEffect } from "react";
 
 interface DashboardProps {
    initialData: any;
 }
 
 export function Dashboard({ initialData }: DashboardProps) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   return (
     <div className="flex h-[100dvh] w-full overflow-hidden bg-slate-50 dark:bg-slate-900/40">
       <SidebarClient medicationsEnabled={initialData.medicationsEnabled !== false} />
@@ -28,7 +32,7 @@ export function Dashboard({ initialData }: DashboardProps) {
               </h2>
               <p className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
-                {new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} • Active Session
+                {mounted ? new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : "Loading..."} • Active Session
               </p>
             </div>
 
@@ -43,12 +47,12 @@ export function Dashboard({ initialData }: DashboardProps) {
                     <LayoutDashboard className="h-4 w-4 mr-2" />
                     Overview
                   </TabsTrigger>
-                  {initialData.medicationsEnabled !== false ? (
+                  {initialData.medicationsEnabled !== false && (
                     <TabsTrigger value="meds" className="data-[state=active]:bg-white dark:bg-slate-950 data-[state=active]:shadow-sm px-6 rounded-xl font-bold text-slate-600 dark:text-slate-300 data-[state=active]:text-purple-700">
                       <BriefcaseMedical className="h-4 w-4 mr-2" />
                       Medications
                     </TabsTrigger>
-                  ) : null}
+                  )}
                   <TabsTrigger value="appointments" className="data-[state=active]:bg-white dark:bg-slate-950 data-[state=active]:shadow-sm px-6 rounded-xl font-bold text-slate-600 dark:text-slate-300 data-[state=active]:text-purple-700">
                     <Calendar className="h-4 w-4 mr-2" />
                     Appointments

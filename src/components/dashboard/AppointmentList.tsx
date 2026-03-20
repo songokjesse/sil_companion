@@ -30,7 +30,9 @@ export function AppointmentList({ appointments }: AppointmentListProps) {
                    <h4 className="text-base font-black tracking-tight text-slate-800 dark:text-slate-100">{appt.title}</h4>
                    <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mt-1">
                      <Avatar className="h-5 w-5 ring-2 ring-white">
-                       <AvatarFallback className="text-[8px] font-black bg-purple-100 text-purple-700 uppercase">{appt.participant.split(' ').map((n: string)=>n[0]).join('')}</AvatarFallback>
+                       <AvatarFallback className="text-[8px] font-black bg-purple-100 text-purple-700 uppercase">
+                         {appt.participant?.split(' ').map((n: string)=>n[0]).join('') || "U"}
+                       </AvatarFallback>
                      </Avatar>
                      <span className="font-bold">{appt.participant}</span>
                    </div>

@@ -32,7 +32,9 @@ export function TaskTimeline({ tasks }: TaskTimelineProps) {
                <div className="flex items-center justify-between">
                  <div className="flex items-center gap-2">
                    <Avatar className="h-6 w-6 ring-2 ring-white shadow-sm">
-                     <AvatarFallback className="text-[10px] font-black bg-purple-100 text-purple-700 uppercase">{task.participant.split(' ').map((n: string)=>n[0]).join('')}</AvatarFallback>
+                     <AvatarFallback className="text-[10px] font-black bg-purple-100 text-purple-700 uppercase">
+                        {task.participant?.split(' ').map((n: string)=>n[0]).join('') || "U"}
+                     </AvatarFallback>
                    </Avatar>
                    <span className="text-sm font-black text-slate-800 dark:text-slate-100">{task.participant}</span>
                  </div>

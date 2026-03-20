@@ -19,7 +19,7 @@ export function HeaderClient({ houseName = "Maple House", alerts }: HeaderClient
      LOW: { icon: Info, color: "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 border-blue-200 dark:border-blue-900/50" },
   };
   return (
-    <header className="sticky top-0 z-30 flex h-20 w-full items-center justify-between border-b border-slate-100 dark:border-slate-800/50/50 bg-white dark:bg-slate-950/70 px-8 backdrop-blur-xl">
+    <header className="sticky top-0 z-30 flex h-20 w-full items-center justify-between border-b border-slate-100 dark:border-slate-800/50 bg-white dark:bg-slate-950/70 px-8 backdrop-blur-xl">
       <div className="flex items-center gap-4">
         <h1 className="text-xl font-black tracking-tight text-slate-800 dark:text-slate-100">SIL Companion</h1>
         <div className="hidden h-5 w-px bg-slate-200 sm:block" />
@@ -39,14 +39,14 @@ export function HeaderClient({ houseName = "Maple House", alerts }: HeaderClient
         </div>
         
         <Popover>
-          <PopoverTrigger render={
+          <PopoverTrigger>
             <button className="relative rounded-full p-2.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-900 dark:hover:text-slate-300 transition-colors">
               <Bell className="h-5 w-5" />
               {alerts.length > 0 && (
                 <span className="absolute right-2 top-2 h-2.5 w-2.5 rounded-full bg-destructive ring-2 ring-white dark:ring-slate-950 animate-pulse" />
               )}
             </button>
-          } />
+          </PopoverTrigger>
           <PopoverContent align="end" className="w-[380px] p-0 rounded-[1.5rem] shadow-xl border-slate-200/60 dark:border-slate-800/60 overflow-hidden">
             <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-950/50 border-b border-slate-100 dark:border-slate-800/60">
                <h4 className="font-black text-sm text-slate-800 dark:text-slate-100 uppercase tracking-widest">Notifications</h4>
@@ -71,7 +71,7 @@ export function HeaderClient({ houseName = "Maple House", alerts }: HeaderClient
                               </div>
                               <div className="flex flex-col gap-1">
                                  <h5 className="font-black text-xs text-slate-800 dark:text-slate-100 leading-tight">
-                                    {alert.participant.fullName} - {alert.severity}
+                                    {typeof alert.participant === 'string' ? alert.participant : alert.participant?.fullName || "System"} - {alert.severity}
                                  </h5>
                                  <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 line-clamp-2">
                                     {alert.message}
