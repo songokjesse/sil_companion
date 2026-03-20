@@ -33,27 +33,27 @@ export default async function HouseManagement() {
          </Link>
       </div>
 
-      <div className="rounded-2xl border bg-white shadow-sm overflow-hidden">
+      <div className="rounded-2xl border bg-white dark:bg-slate-950 shadow-sm overflow-hidden">
          <Table>
-            <TableHeader className="bg-slate-50">
+            <TableHeader className="bg-slate-50 dark:bg-slate-900">
                <TableRow>
-                  <TableHead className="font-black text-xs uppercase tracking-widest text-slate-500 py-4">House Facility</TableHead>
-                  <TableHead className="font-black text-xs uppercase tracking-widest text-slate-500">Utilization</TableHead>
-                  <TableHead className="font-black text-xs uppercase tracking-widest text-slate-500">Staffing</TableHead>
-                  <TableHead className="font-black text-xs uppercase tracking-widest text-slate-500">Compliance</TableHead>
+                  <TableHead className="font-black text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400 py-4">House Facility</TableHead>
+                  <TableHead className="font-black text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">Utilization</TableHead>
+                  <TableHead className="font-black text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">Staffing</TableHead>
+                  <TableHead className="font-black text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">Compliance</TableHead>
                   <TableHead className="text-right"></TableHead>
                </TableRow>
             </TableHeader>
             <TableBody>
                {houses.map((house) => (
-                  <TableRow key={house.id} className="hover:bg-slate-50 transition-colors">
+                  <TableRow key={house.id} className="hover:bg-slate-50 dark:bg-slate-900 transition-colors">
                      <TableCell className="py-4">
                         <div className="flex items-center gap-4">
                            <div className="h-10 w-10 rounded-xl bg-purple-100 flex items-center justify-center font-bold text-purple-700">
                               <Building2 className="h-5 w-5" />
                            </div>
                            <div className="flex flex-col">
-                              <span className="font-black text-sm text-slate-800 tracking-tight">{house.name}</span>
+                              <span className="font-black text-sm text-slate-800 dark:text-slate-100 tracking-tight">{house.name}</span>
                               <span className="text-xs text-muted-foreground font-medium flex items-center gap-1 uppercase tracking-widest">
                                  <MapPin className="h-3 w-3" />
                                  Main Campus Region

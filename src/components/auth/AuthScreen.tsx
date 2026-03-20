@@ -48,7 +48,7 @@ export default function AuthScreen() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4">
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 dark:bg-slate-900 p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -59,11 +59,11 @@ export default function AuthScreen() {
           <div className="h-12 w-12 flex items-center justify-center rounded-2xl bg-purple-600 shadow-xl shadow-purple-200">
             <ShieldCheck className="h-7 w-7 text-white" />
           </div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-slate-800">SIL Companion</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight text-slate-800 dark:text-slate-100">SIL Companion</h1>
         </div>
 
         <Card className="border-none shadow-2xl shadow-slate-200 overflow-hidden relative">
-          <CardHeader className="space-y-1 text-center pb-8 border-b bg-slate-50/50">
+          <CardHeader className="space-y-1 text-center pb-8 border-b bg-slate-50 dark:bg-slate-900/50">
             <CardTitle className="text-3xl font-black tracking-tight text-slate-900">
               {isLogin ? "Staff Portal" : "Team Registry"}
             </CardTitle>
@@ -89,7 +89,7 @@ export default function AuthScreen() {
                        required={!isLogin}
                        value={name}
                        onChange={(e) => setName(e.target.value)}
-                       className="h-11 border-slate-200 focus-visible:ring-purple-500 font-medium"
+                       className="h-11 border-slate-200 dark:border-slate-800 focus-visible:ring-purple-500 font-medium"
                     />
                   </motion.div>
                 )}
@@ -104,7 +104,7 @@ export default function AuthScreen() {
                    required 
                    value={email}
                    onChange={(e) => setEmail(e.target.value)}
-                   className="h-11 border-slate-200 focus-visible:ring-purple-500 font-medium"
+                   className="h-11 border-slate-200 dark:border-slate-800 focus-visible:ring-purple-500 font-medium"
                 />
               </div>
 
@@ -123,7 +123,7 @@ export default function AuthScreen() {
                    required 
                    value={password}
                    onChange={(e) => setPassword(e.target.value)}
-                   className="h-11 border-slate-200 focus-visible:ring-purple-500 font-medium"
+                   className="h-11 border-slate-200 dark:border-slate-800 focus-visible:ring-purple-500 font-medium"
                 />
               </div>
 
@@ -159,7 +159,7 @@ export default function AuthScreen() {
                 <button 
                   type="button"
                   onClick={() => { setIsLogin(!isLogin); setError(""); }}
-                  className="text-xs font-bold text-slate-500 hover:text-purple-600 transition-colors"
+                  className="text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-purple-600 transition-colors"
                 >
                   {isLogin ? "New to the team? Register here" : "Return to Secure Login"}
                 </button>

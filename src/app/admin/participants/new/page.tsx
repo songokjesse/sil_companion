@@ -41,8 +41,8 @@ export default async function NewParticipantPage() {
         </Link>
 
         <div className="space-y-1">
-          <h1 className="text-3xl font-black tracking-tight text-slate-800">Register Resident</h1>
-          <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 flex items-center gap-2">
+          <h1 className="text-3xl font-black tracking-tight text-slate-800 dark:text-slate-100">Register Resident</h1>
+          <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 flex items-center gap-2">
             <ShieldCheck className="h-4 w-4 text-emerald-600" />
             Minimal Data Profile • Only required operational fields are collected here
           </p>
@@ -50,9 +50,9 @@ export default async function NewParticipantPage() {
       </div>
 
       <form action={handleSubmit} className="space-y-6">
-        <div className="rounded-[2rem] border border-slate-200/60 bg-white p-6 md:p-10 shadow-sm shadow-slate-200/50 relative overflow-hidden">
+        <div className="rounded-[2rem] border border-slate-200 dark:border-slate-800/60 bg-white dark:bg-slate-950 p-6 md:p-10 shadow-sm shadow-slate-200/50 relative overflow-hidden">
           {/* Decorative background */}
-          <div className="absolute top-0 right-0 h-64 w-64 bg-slate-50 rounded-full blur-3xl opacity-50 pointer-events-none -mt-32 -mr-32" />
+          <div className="absolute top-0 right-0 h-64 w-64 bg-slate-50 dark:bg-slate-900 rounded-full blur-3xl opacity-50 pointer-events-none -mt-32 -mr-32" />
 
           <div className="space-y-8 relative z-10">
             {/* Disclaimer Banner */}
@@ -70,7 +70,7 @@ export default async function NewParticipantPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-2">
-                <label htmlFor="fullName" className="text-[10px] font-black uppercase tracking-widest text-slate-500 flex items-center gap-1.5">
+                <label htmlFor="fullName" className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
                   <User className="h-3 w-3" /> Full Legal Name *
                 </label>
                 <input
@@ -79,12 +79,12 @@ export default async function NewParticipantPage() {
                   name="fullName"
                   required
                   placeholder="e.g. Liam Carter"
-                  className="w-full rounded-xl border border-slate-200/60 bg-slate-50/50 px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-400 transition-all placeholder:text-slate-400"
+                  className="w-full rounded-xl border border-slate-200 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-900/50 px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-400 transition-all placeholder:text-slate-400"
                 />
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="preferredName" className="text-[10px] font-black uppercase tracking-widest text-slate-500 flex items-center gap-1.5">
+                <label htmlFor="preferredName" className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
                   <User className="h-3 w-3" /> Preferred Name / Alias
                 </label>
                 <input
@@ -92,14 +92,14 @@ export default async function NewParticipantPage() {
                   id="preferredName"
                   name="preferredName"
                   placeholder="e.g. Liam"
-                  className="w-full rounded-xl border border-slate-200/60 bg-slate-50/50 px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-400 transition-all placeholder:text-slate-400"
+                  className="w-full rounded-xl border border-slate-200 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-900/50 px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-400 transition-all placeholder:text-slate-400"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-2">
-                <label htmlFor="dob" className="text-[10px] font-black uppercase tracking-widest text-slate-500 flex items-center gap-1.5">
+                <label htmlFor="dob" className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
                   <Calendar className="h-3 w-3" /> Date of Birth *
                 </label>
                 <input
@@ -107,19 +107,19 @@ export default async function NewParticipantPage() {
                   id="dob"
                   name="dob"
                   required
-                  className="w-full rounded-xl border border-slate-200/60 bg-slate-50/50 px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-400 transition-all text-slate-800"
+                  className="w-full rounded-xl border border-slate-200 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-900/50 px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-400 transition-all text-slate-800 dark:text-slate-100"
                 />
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="houseId" className="text-[10px] font-black uppercase tracking-widest text-slate-500 flex items-center gap-1.5">
+                <label htmlFor="houseId" className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
                   <Building2 className="h-3 w-3" /> Primary Residence *
                 </label>
                 <select
                   id="houseId"
                   name="houseId"
                   required
-                  className="w-full rounded-xl border border-slate-200/60 bg-slate-50/50 px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-400 transition-all text-slate-800 appearance-none"
+                  className="w-full rounded-xl border border-slate-200 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-900/50 px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-400 transition-all text-slate-800 dark:text-slate-100 appearance-none"
                 >
                   <option value="" disabled selected>Select an assignment facility...</option>
                   {houses.map((h) => (

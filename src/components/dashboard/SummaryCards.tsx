@@ -36,7 +36,7 @@ export function SummaryCards({ metrics }: SummaryCardsProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
           >
-            <Card className="overflow-hidden border border-slate-200/60 shadow-sm shadow-slate-200/50 rounded-2xl transition-all hover:shadow-md hover:border-purple-200 hover:-translate-y-0.5 group bg-white">
+            <Card className="overflow-hidden border border-slate-200 dark:border-slate-800/60 shadow-sm shadow-slate-200/50 rounded-2xl transition-all hover:shadow-md hover:border-purple-200 hover:-translate-y-0.5 group bg-white dark:bg-slate-950">
               <CardContent className="flex items-center gap-5 p-5">
                 <div className={`p-3.5 rounded-2xl ${colors.bg} transition-transform group-hover:scale-110`}>
                   <Icon className={`h-6 w-6 ${colors.icon}`} />
@@ -44,7 +44,7 @@ export function SummaryCards({ metrics }: SummaryCardsProps) {
                 <div className="flex flex-col gap-1">
                   <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">{item.title}</p>
                   <div className="flex items-baseline gap-2">
-                    <h3 className="text-3xl font-black tracking-tight text-slate-800">{item.value}</h3>
+                    <h3 className="text-3xl font-black tracking-tight text-slate-800 dark:text-slate-100">{item.value}</h3>
                   </div>
                 </div>
               </CardContent>

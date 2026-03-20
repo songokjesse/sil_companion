@@ -10,16 +10,16 @@ export default async function ParticipantsPage() {
   const participants = await getParticipantsList();
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-slate-50/40">
+    <div className="flex h-screen w-full overflow-hidden bg-slate-50 dark:bg-slate-900/40">
       <Sidebar />
       <div className="flex flex-1 flex-col overflow-hidden">
         <Header houseName="Maple House" />
-        <ScrollArea className="flex-1 bg-slate-50/60">
+        <ScrollArea className="flex-1 bg-slate-50 dark:bg-slate-900/60">
           <main className="container mx-auto p-4 md:p-10 space-y-10 max-w-7xl animate-in fade-in duration-700">
             {/* Title Section */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                <div className="space-y-1">
-                  <h2 className="text-3xl md:text-4xl font-black tracking-tight text-slate-800">
+                  <h2 className="text-3xl md:text-4xl font-black tracking-tight text-slate-800 dark:text-slate-100">
                      Participants
                   </h2>
                   <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 flex items-center gap-2">
@@ -51,7 +51,7 @@ export default async function ParticipantsPage() {
                      <Link 
                         href={`/participants/${p.id}`} 
                         key={p.id}
-                        className="group relative overflow-hidden rounded-[2rem] border border-slate-200/60 bg-white p-6 transition-all hover:bg-slate-50 hover:border-purple-200 hover:shadow-md hover:-translate-y-1 shadow-sm shadow-slate-200/50 flex flex-col items-center text-center gap-4"
+                        className="group relative overflow-hidden rounded-[2rem] border border-slate-200 dark:border-slate-800/60 bg-white dark:bg-slate-950 p-6 transition-all hover:bg-slate-50 dark:bg-slate-900 hover:border-purple-200 hover:shadow-md hover:-translate-y-1 shadow-sm shadow-slate-200/50 flex flex-col items-center text-center gap-4"
                      >
                         {/* Decorative Background */}
                         <div className="absolute top-0 right-0 h-32 w-32 bg-purple-50 rounded-full blur-2xl opacity-60 pointer-events-none -mr-16 -mt-16 group-hover:bg-purple-100 transition-colors" />
@@ -62,7 +62,7 @@ export default async function ParticipantsPage() {
                         </Avatar>
 
                         <div className="z-10 space-y-1 mt-2">
-                           <h3 className="text-xl font-black tracking-tight text-slate-800 transition-colors group-hover:text-purple-700">
+                           <h3 className="text-xl font-black tracking-tight text-slate-800 dark:text-slate-100 transition-colors group-hover:text-purple-700">
                               {safeName}
                            </h3>
                            <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
@@ -81,12 +81,12 @@ export default async function ParticipantsPage() {
                })}
 
                {/* Add Participant Skeleton / CTA */}
-               <div className="group relative overflow-hidden rounded-[2rem] border-2 border-dashed border-slate-200 bg-slate-50/50 p-6 transition-all hover:bg-slate-50 hover:border-purple-300 flex flex-col items-center justify-center text-center gap-4 min-h-[300px] cursor-pointer">
+               <div className="group relative overflow-hidden rounded-[2rem] border-2 border-dashed border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-6 transition-all hover:bg-slate-50 dark:bg-slate-900 hover:border-purple-300 flex flex-col items-center justify-center text-center gap-4 min-h-[300px] cursor-pointer">
                   <div className="h-16 w-16 rounded-full bg-slate-100 flex items-center justify-center group-hover:bg-purple-100 group-hover:scale-110 transition-all">
                      <Users className="h-8 w-8 text-slate-400 group-hover:text-purple-600" />
                   </div>
                   <div className="space-y-1">
-                     <h3 className="text-lg font-black tracking-tight text-slate-800">Add Participant</h3>
+                     <h3 className="text-lg font-black tracking-tight text-slate-800 dark:text-slate-100">Add Participant</h3>
                      <p className="text-xs font-bold text-slate-400">Register a new resident securely</p>
                   </div>
                </div>

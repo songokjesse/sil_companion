@@ -122,3 +122,9 @@
     @apply font-sans;
   }
 }
+
+@media (max-width: 768px) {
+  main {
+    padding-bottom: 6rem !important;
+  }
+}

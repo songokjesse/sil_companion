@@ -30,8 +30,8 @@ export default function NewHousePage() {
         </Link>
 
         <div className="space-y-1">
-          <h1 className="text-3xl font-black tracking-tight text-slate-800">Provision New House</h1>
-          <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 flex items-center gap-2">
+          <h1 className="text-3xl font-black tracking-tight text-slate-800 dark:text-slate-100">Provision New House</h1>
+          <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 flex items-center gap-2">
             <MapPin className="h-4 w-4 text-emerald-600" />
             Add a new physical site to your organizational registry
           </p>
@@ -39,13 +39,13 @@ export default function NewHousePage() {
       </div>
 
       <form action={handleSubmit} className="space-y-6">
-        <div className="rounded-[2rem] border border-slate-200/60 bg-white p-6 md:p-10 shadow-sm shadow-slate-200/50 relative overflow-hidden">
+        <div className="rounded-[2rem] border border-slate-200 dark:border-slate-800/60 bg-white dark:bg-slate-950 p-6 md:p-10 shadow-sm shadow-slate-200/50 relative overflow-hidden">
           {/* Decorative background */}
-          <div className="absolute top-0 right-0 h-64 w-64 bg-slate-50 rounded-full blur-3xl opacity-50 pointer-events-none -mt-32 -mr-32" />
+          <div className="absolute top-0 right-0 h-64 w-64 bg-slate-50 dark:bg-slate-900 rounded-full blur-3xl opacity-50 pointer-events-none -mt-32 -mr-32" />
 
           <div className="space-y-8 relative z-10">
             <div className="space-y-2 max-w-lg">
-              <label htmlFor="name" className="text-[10px] font-black uppercase tracking-widest text-slate-500 flex items-center gap-1.5">
+              <label htmlFor="name" className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
                 <Building2 className="h-3 w-3" /> House/Facility Name *
               </label>
               <input
@@ -54,11 +54,11 @@ export default function NewHousePage() {
                 name="name"
                 required
                 placeholder="e.g. Oakwood Residence"
-                className="w-full rounded-xl border border-slate-200/60 bg-slate-50/50 px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-400 transition-all placeholder:text-slate-400"
+                className="w-full rounded-xl border border-slate-200 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-900/50 px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-400 transition-all placeholder:text-slate-400"
               />
             </div>
             
-            <p className="text-xs font-medium text-slate-500 italic max-w-md leading-relaxed">
+            <p className="text-xs font-medium text-slate-500 dark:text-slate-400 italic max-w-md leading-relaxed">
                Note: To maintain operational simplicity, houses are globally registered within your primary Organization context automatically upon creation.
             </p>
           </div>

@@ -32,27 +32,27 @@ export default async function UserManagement() {
          </Button>
       </div>
 
-      <div className="rounded-2xl border bg-white shadow-sm overflow-hidden">
+      <div className="rounded-2xl border bg-white dark:bg-slate-950 shadow-sm overflow-hidden">
          <Table>
-            <TableHeader className="bg-slate-50">
+            <TableHeader className="bg-slate-50 dark:bg-slate-900">
                <TableRow>
-                  <TableHead className="font-black text-xs uppercase tracking-widest text-slate-500 py-4">User</TableHead>
-                  <TableHead className="font-black text-xs uppercase tracking-widest text-slate-500">Role</TableHead>
-                  <TableHead className="font-black text-xs uppercase tracking-widest text-slate-500">Assignments</TableHead>
-                  <TableHead className="font-black text-xs uppercase tracking-widest text-slate-500">Status</TableHead>
+                  <TableHead className="font-black text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400 py-4">User</TableHead>
+                  <TableHead className="font-black text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">Role</TableHead>
+                  <TableHead className="font-black text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">Assignments</TableHead>
+                  <TableHead className="font-black text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">Status</TableHead>
                   <TableHead className="text-right"></TableHead>
                </TableRow>
             </TableHeader>
             <TableBody>
                {users.map((user) => (
-                  <TableRow key={user.id} className="hover:bg-slate-50 transition-colors">
+                  <TableRow key={user.id} className="hover:bg-slate-50 dark:bg-slate-900 transition-colors">
                      <TableCell className="py-4">
                         <div className="flex items-center gap-3">
                            <div className="h-9 w-9 rounded-full bg-purple-100 flex items-center justify-center font-bold text-purple-700">
                               {user.name?.[0]}
                            </div>
                            <div className="flex flex-col">
-                              <span className="font-bold text-sm text-slate-800">{user.name}</span>
+                              <span className="font-bold text-sm text-slate-800 dark:text-slate-100">{user.name}</span>
                               <span className="text-xs text-muted-foreground font-medium flex items-center gap-1">
                                  <Mail className="h-3 w-3" />
                                  {user.email}
@@ -68,7 +68,7 @@ export default async function UserManagement() {
                      <TableCell>
                         <div className="flex flex-wrap gap-1">
                            {user.houses.map((house) => (
-                              <Badge key={house.id} variant="outline" className="text-[10px] font-medium border-slate-200">
+                              <Badge key={house.id} variant="outline" className="text-[10px] font-medium border-slate-200 dark:border-slate-800">
                                  {house.name}
                               </Badge>
                            ))}
