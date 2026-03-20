@@ -69,74 +69,97 @@ export function SidebarClient({ isAdminView = false, medicationsEnabled = true }
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="hidden md:flex sticky top-0 h-screen w-80 flex-col border-r border-slate-200/50 bg-slate-50/50 dark:bg-slate-950/50 dark:border-slate-800/50 p-5 transition-all overflow-y-auto z-40">
-      <div className="flex items-center gap-3 mb-8 ml-3">
-        <div className="h-9 w-9 flex items-center justify-center rounded-xl bg-purple-600 shadow-lg shadow-purple-200">
-          <ShieldCheck className="h-6 w-6 text-white" />
+    <aside className="hidden md:flex sticky top-0 h-screen w-72 flex-col border-r border-slate-200/50 bg-white/50 dark:bg-slate-950/50 backdrop-blur-xl p-6 transition-all z-40">
+      {/* Brand Section */}
+      <div className="flex items-center gap-4 mb-10 px-2 mt-2">
+        <div className="relative group">
+          <div className="absolute -inset-1.5 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200" />
+          <div className="relative h-11 w-11 flex items-center justify-center rounded-2xl bg-gradient-to-br from-purple-600 to-indigo-600 shadow-xl shadow-purple-500/20">
+            <ShieldCheck className="h-6 w-6 text-white stroke-[2.5]" />
+          </div>
         </div>
-        <div>
-           <h2 className="text-xl font-black tracking-tight text-slate-800 dark:text-slate-100 leading-none">SIL<span className="text-purple-600 dark:text-purple-400">Companion</span></h2>
-           {isAdminView && <span className="text-[10px] font-black uppercase text-purple-600 dark:text-purple-400 tracking-widest mt-1 block">Admin Console</span>}
+        <div className="flex flex-col">
+           <h2 className="text-xl font-[900] tracking-tight text-slate-900 dark:text-slate-100 leading-none">SIL<span className="text-purple-600 dark:text-purple-500">Companion</span></h2>
+           <div className="flex items-center gap-1.5 mt-1">
+             <div className="h-1 w-1 rounded-full bg-emerald-500 animate-pulse" />
+             <span className="text-[10px] font-black uppercase text-slate-400 tracking-[0.15em] block">{isAdminView ? "Admin Context" : "Live Session"}</span>
+           </div>
         </div>
       </div>
 
-      <nav className="space-y-1">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60 mb-2 px-3">
-           {isAdminView ? "Admin Controls" : "Main Menu"}
+      <nav className="flex-1 space-y-1">
+        <p className="text-[10px] font-[900] uppercase tracking-[0.2em] text-slate-400/80 mb-4 px-3 flex items-center gap-3">
+           <div className="h-px bg-slate-200 dark:bg-slate-800 flex-1" />
+           {isAdminView ? "Management" : "Main Hub"}
         </p>
-        {menuItems.map((item) => (
-          <Link
-            key={item.label}
-            href={item.href}
-            className={cn(
-              "group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition-all hover:bg-slate-100/80 dark:hover:bg-slate-800/50 active:scale-[0.98]",
-              item.active ? "bg-white dark:bg-slate-900 shadow-sm shadow-slate-200/50 dark:shadow-none border border-slate-200/60 dark:border-slate-800 text-slate-800 dark:text-slate-100" : "text-slate-600 dark:text-slate-400 border border-transparent"
-            )}
-          >
-            <item.icon className={cn(
-              "h-5 w-5 transition-colors",
-              item.active ? "text-purple-600 dark:text-purple-400" : "text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300"
-            )} />
-            {item.label}
-            {item.active && <div className="ml-auto h-1.5 w-1.5 rounded-full bg-purple-600 dark:bg-purple-400" />}
-          </Link>
-        ))}
-
-        {user?.role === "ADMIN" && !isAdminView && (
-           <Link
-             href="/admin"
-             className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-black text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-all mt-4 border border-purple-100 dark:border-purple-900/30 border-dashed"
-           >
-             <Settings className="h-5 w-5" />
-             Switch to Admin Mode
-           </Link>
-        )}
         
-        {isAdminView && (
-           <Link
-             href="/"
-             className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-black text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-800 hover:shadow-sm hover:border-slate-200 dark:hover:border-slate-700 transition-all mt-4 border border-slate-200 dark:border-slate-800 border-dashed"
-           >
-             <LayoutDashboard className="h-5 w-5" />
-             Exit Admin Mode
-           </Link>
+        <div className="space-y-1">
+          {menuItems.map((item) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              className={cn(
+                "group flex w-full items-center gap-3.5 rounded-2xl px-5 py-4 text-[13px] font-bold transition-all active:scale-[0.97]",
+                item.active 
+                  ? "bg-white dark:bg-slate-900 shadow-xl shadow-purple-500/5 border border-slate-200/60 dark:border-slate-800 text-slate-900 dark:text-slate-100" 
+                  : "text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100/50 dark:hover:bg-slate-800/40 border border-transparent"
+              )}
+            >
+              <item.icon className={cn(
+                "h-5 w-5 transition-transform duration-300 group-hover:scale-110",
+                item.active ? "text-purple-600 dark:text-purple-400 stroke-[2.5]" : "text-slate-400 group-hover:text-purple-500 dark:group-hover:text-purple-400"
+              )} />
+              {item.label}
+              {item.active && (
+                <div className="ml-auto w-1.5 h-6 rounded-full bg-gradient-to-b from-purple-500 to-indigo-600" />
+              )}
+            </Link>
+          ))}
+        </div>
+
+        {user?.role === "ADMIN" && (
+           <div className="pt-6 mt-6 border-t border-slate-100 dark:border-slate-800/50">
+             <Link
+               href={isAdminView ? "/" : "/admin"}
+               className={cn(
+                 "group flex w-full h-14 items-center gap-3.5 rounded-2xl px-5 text-[13px] font-black transition-all active:scale-[0.97] border shadow-sm",
+                 isAdminView 
+                    ? "bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 hover:bg-slate-100" 
+                    : "bg-purple-600 text-white border-purple-500 shadow-purple-500/10 hover:bg-purple-700"
+               )}
+             >
+               {isAdminView ? (
+                 <>
+                   <LayoutDashboard className="h-5 w-5" />
+                   Exit Management
+                 </>
+               ) : (
+                 <>
+                   <Settings className="h-5 w-5 group-hover:rotate-90 transition-transform duration-500" />
+                   Admin Dashboard
+                 </>
+               )}
+             </Link>
+           </div>
         )}
       </nav>
 
-      {/* Footer Items */}
-      <div className="mt-auto pt-6">
-        <Separator className="mb-4 opacity-50 dark:opacity-20" />
-        <button className="group flex w-full items-center gap-3 rounded-lg px-4 py-2 text-sm font-medium text-slate-500 dark:text-slate-400 transition-all hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-800 dark:hover:text-slate-200">
-          <Settings className="h-5 w-5 transition-transform group-hover:rotate-45" />
-          General Settings
-        </button>
-        <button 
-           onClick={handleSignOut}
-           className="group flex w-full items-center gap-3 rounded-lg px-4 py-2 text-sm font-bold text-rose-600/80 dark:text-rose-500/80 transition-all hover:bg-rose-50 dark:hover:bg-rose-950/30 hover:text-rose-700 dark:hover:text-rose-400"
-        >
-          <LogOut className="h-5 w-5" />
-          Logout
-        </button>
+      {/* Footer Section */}
+      <div className="pt-8 border-t border-slate-100 dark:border-slate-800/50">
+        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400/60 mb-4 px-3">System</p>
+        <div className="space-y-1">
+          <button className="group flex w-full items-center gap-3.5 rounded-2xl px-5 py-3.5 text-[13px] font-bold text-slate-500 hover:text-slate-900 dark:hover:text-slate-200 transition-all hover:bg-slate-100/50 dark:hover:bg-slate-800/40">
+            <Settings className="h-5 w-5 text-slate-400 group-hover:rotate-90 transition-transform duration-500" />
+            Config
+          </button>
+          <button 
+             onClick={handleSignOut}
+             className="group flex w-full items-center gap-3.5 rounded-2xl px-5 py-3.5 text-[13px] font-bold text-rose-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/20 transition-all"
+          >
+            <LogOut className="h-5 w-5" />
+            Sign Out
+          </button>
+        </div>
       </div>
     </aside>
 

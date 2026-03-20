@@ -33,8 +33,8 @@ export function HeaderClient({ houseName = "Maple House", alerts }: HeaderClient
           <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-slate-400 group-focus-within:text-purple-500 transition-colors" />
           <input
             type="search"
-            placeholder="Search tasks, staff, or residents..."
-            className="h-10 w-full rounded-full border border-slate-200 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-900/50 px-10 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-purple-100 focus:border-purple-300 transition-all placeholder:text-slate-400"
+            placeholder="Quick search residents or staff..."
+            className="h-11 w-full rounded-2xl border-2 border-slate-100 dark:border-slate-800/80 bg-slate-50/50 dark:bg-slate-900/40 px-11 text-sm font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600"
           />
         </div>
         
