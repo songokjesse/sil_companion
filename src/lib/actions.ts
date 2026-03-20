@@ -198,3 +198,84 @@ export async function createHouse(name: string) {
 
   return newHouse;
 }
+
+export async function getMedicationsForToday(houseName = "Maple House") {
+  const todayStart = new Date();
+  todayStart.setHours(0, 0, 0, 0);
+  const todayEnd = new Date();
+  todayEnd.setHours(23, 59, 59, 999);
+
+  return await prisma.medication.findMany({
+    where: {
+      participant: { house: { name: houseName } }
+    },
+    include: {
+      participant: { select: { id: true, fullName: true, photoUrl: true, preferredName: true } },
+      logs: {
+        where: {
+          timestamp: { gte: todayStart, lte: todayEnd }
+        }
+      }
+    },
+    orderBy: { timeDue: 'asc' }
+  });
+}
+
+import { auth } from "./auth";
+import { headers } from "next/headers";
+
+export async function logMedication(medicationId: string, participantId: string, status: "DONE" | "SKIPPED") {
+  const session = await auth.api.getSession({ headers: await headers() });
+  if (!session) throw new Error("Unauthorized access. Cannot sign off medication.");
+
+  return await prisma.taskLog.create({
+    data: {
+      medicationId,
+      participantId,
+      status,
+      userId: session.user.id
+    }
+  });
+}
+
+export async function getAllMedicationsAdmin() {
+  return await prisma.medication.findMany({
+    include: {
+      participant: {
+        select: { fullName: true, house: { select: { name: true } } }
+      }
+    },
+    orderBy: [
+      { participant: { house: { name: 'asc' } } },
+      { participant: { fullName: 'asc' } },
+      { timeDue: 'asc' }
+    ]
+  });
+}
+
+export async function createMedication(data: {
+  participantId: string;
+  name: string;
+  dosage: string;
+  instructions?: string;
+  timeDue: string;
+  isCritical: boolean;
+}) {
+  return await prisma.medication.create({
+    data: {
+      participantId: data.participantId,
+      name: data.name,
+      dosage: data.dosage,
+      instructions: data.instructions,
+      timeDue: data.timeDue,
+      isCritical: data.isCritical
+    }
+  });
+}
+
+export async function getAllParticipantsAdmin() {
+  return await prisma.participant.findMany({
+    select: { id: true, fullName: true, house: { select: { name: true } } },
+    orderBy: { fullName: 'asc' }
+  });
+}

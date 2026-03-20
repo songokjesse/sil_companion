@@ -29,6 +29,7 @@ export function Sidebar({ isAdminView = false }: { isAdminView?: boolean }) {
     { icon: LayoutGrid, label: "Admin Console", href: "/admin", active: pathname === "/admin" },
     { icon: Building2, label: "Manage Houses", href: "/admin/houses", active: pathname.startsWith("/admin/houses") },
     { icon: Users, label: "Manage Participants", href: "/admin/participants", active: pathname.startsWith("/admin/participants") },
+    { icon: BriefcaseMedical, label: "Manage Medications", href: "/admin/medications", active: pathname.startsWith("/admin/medications") },
     { icon: HardHat, label: "Staff Management", href: "/admin/users", active: pathname.startsWith("/admin/users") },
   ] : [
     { icon: LayoutDashboard, label: "Today Dashboard", href: "/", active: pathname === "/" },
