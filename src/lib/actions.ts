@@ -254,6 +254,69 @@ export async function logMultipleMedications(medicationIds: string[], participan
   );
 }
 
+export async function getRoutinesForToday(houseName = "Maple House", dayOfWeek = "DAILY") {
+  const todayStart = new Date();
+  todayStart.setHours(0, 0, 0, 0);
+  const todayEnd = new Date();
+  todayEnd.setHours(23, 59, 59, 999);
+
+  return await prisma.routine.findMany({
+    where: {
+      participant: { house: { name: houseName } },
+      // Simplified: Production would use matching logic against frequency string
+    },
+    include: {
+      participant: { select: { id: true, fullName: true, photoUrl: true, preferredName: true } },
+      logs: {
+        where: {
+          timestamp: { gte: todayStart, lte: todayEnd }
+        }
+      }
+    },
+    orderBy: { timeDue: 'asc' }
+  });
+}
+
+export async function logRoutine(routineId: string, participantId: string, status: "DONE" | "SKIPPED" | "DELAYED", notes?: string) {
+  const session = await auth.api.getSession({ headers: await headers() });
+  if (!session) throw new Error("Unauthorized access.");
+
+  return await prisma.taskLog.create({
+    data: {
+      routineId,
+      participantId,
+      status,
+      notes,
+      userId: session.user.id
+    }
+  });
+}
+
+export async function getAllRoutinesAdmin() {
+  return await prisma.routine.findMany({
+    include: {
+      participant: { select: { fullName: true, house: { select: { name: true } } } }
+    },
+    orderBy: [
+      { participant: { house: { name: 'asc' } } },
+      { participant: { fullName: 'asc' } },
+      { timeDue: 'asc' }
+    ]
+  });
+}
+
+export async function createRoutine(data: {
+  participantId: string;
+  title: string;
+  description?: string;
+  frequency: string;
+  timeDue?: string;
+}) {
+  return await prisma.routine.create({
+    data
+  });
+}
+
 export async function getAllMedicationsAdmin() {
   return await prisma.medication.findMany({
     include: {
