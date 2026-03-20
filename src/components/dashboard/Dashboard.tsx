@@ -43,10 +43,12 @@ export function Dashboard({ initialData }: DashboardProps) {
                     <LayoutDashboard className="h-4 w-4 mr-2" />
                     Overview
                   </TabsTrigger>
-                  <TabsTrigger value="meds" className="data-[state=active]:bg-white dark:bg-slate-950 data-[state=active]:shadow-sm px-6 rounded-xl font-bold text-slate-600 dark:text-slate-300 data-[state=active]:text-purple-700">
-                    <BriefcaseMedical className="h-4 w-4 mr-2" />
-                    Medications
-                  </TabsTrigger>
+                  {initialData.medicationsEnabled !== false && (
+                    <TabsTrigger value="meds" className="data-[state=active]:bg-white dark:bg-slate-950 data-[state=active]:shadow-sm px-6 rounded-xl font-bold text-slate-600 dark:text-slate-300 data-[state=active]:text-purple-700">
+                      <BriefcaseMedical className="h-4 w-4 mr-2" />
+                      Medications
+                    </TabsTrigger>
+                  )}
                   <TabsTrigger value="appointments" className="data-[state=active]:bg-white dark:bg-slate-950 data-[state=active]:shadow-sm px-6 rounded-xl font-bold text-slate-600 dark:text-slate-300 data-[state=active]:text-purple-700">
                     <Calendar className="h-4 w-4 mr-2" />
                     Appointments

@@ -442,3 +442,17 @@ export async function createAlert(data: {
     data
   });
 }
+
+export async function isMedicationsEnabled() {
+  const session = await auth.api.getSession({ headers: await headers() });
+  if (!session) return false;
+  
+  // As a real multi-tenant platform, we query the org
+  // For the moment, we default grab the first org or the user's mapped org
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    include: { organization: true }
+  });
+  
+  return (user?.organization as any)?.medicationsEnabled ?? false;
+}
