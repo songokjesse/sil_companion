@@ -2,7 +2,7 @@ import { getMedicationsForToday } from "@/lib/actions";
 import { Header } from "@/components/dashboard/Header";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { BriefcaseMedical, Pill, Info } from "lucide-react";
-import MedicationClientList from "./MedicationClientList";
+import ParticipantMedPack from "./ParticipantMedPack";
 
 export default async function MedicationsPage() {
   const meds = await getMedicationsForToday();
@@ -62,9 +62,15 @@ export default async function MedicationsPage() {
                         <div className="h-px bg-slate-200 dark:bg-slate-800 flex-1" />
                      </div>
                      
-                     <div className="grid grid-cols-1 gap-4">
-                         {slot.meds.map((med) => (
-                            <MedicationClientList key={med.id} medication={med} />
+                     <div className="grid grid-cols-1 gap-8">
+                         {Object.values(
+                             slot.meds.reduce((acc, med) => {
+                                 if (!acc[med.participant.id]) acc[med.participant.id] = { participant: med.participant, meds: [] };
+                                 acc[med.participant.id].meds.push(med);
+                                 return acc;
+                             }, {} as Record<string, { participant: any, meds: any[] }>)
+                         ).map((group) => (
+                            <ParticipantMedPack key={group.participant.id} participant={group.participant} meds={group.meds} />
                          ))}
                      </div>
                   </div>

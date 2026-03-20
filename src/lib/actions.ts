@@ -238,6 +238,22 @@ export async function logMedication(medicationId: string, participantId: string,
   });
 }
 
+export async function logMultipleMedications(medicationIds: string[], participantId: string, status: "DONE" | "SKIPPED") {
+  const session = await auth.api.getSession({ headers: await headers() });
+  if (!session) throw new Error("Unauthorized access.");
+
+  return await prisma.$transaction(
+     medicationIds.map(id => prisma.taskLog.create({
+       data: {
+          medicationId: id,
+          participantId,
+          status,
+          userId: session.user.id
+       }
+     }))
+  );
+}
+
 export async function getAllMedicationsAdmin() {
   return await prisma.medication.findMany({
     include: {
