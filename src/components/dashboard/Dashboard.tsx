@@ -1,6 +1,6 @@
 "use client";
 
-import { Header } from "./Header";
+import { HeaderClient } from "./HeaderClient";
 import { SidebarClient } from "./SidebarClient";
 import { SummaryCards } from "./SummaryCards";
 import { TaskTimeline } from "./TaskTimeline";
@@ -22,7 +22,7 @@ export function Dashboard({ initialData }: DashboardProps) {
     <div className="flex h-[100dvh] w-full overflow-hidden bg-slate-50 dark:bg-slate-900/40">
       <SidebarClient medicationsEnabled={initialData.medicationsEnabled !== false} />
       <div className="flex flex-1 flex-col overflow-hidden">
-        <Header houseName={initialData.houseName} />
+        <HeaderClient houseName={initialData.houseName} alerts={initialData.alerts} />
         <div className="flex-1 overflow-y-auto min-h-0 bg-slate-50 dark:bg-slate-900/60">
           <main className="container mx-auto p-4 pb-28 md:p-10 md:pb-10 space-y-10 max-w-7xl animate-in fade-in duration-700">
             {/* Page Title Section */}
