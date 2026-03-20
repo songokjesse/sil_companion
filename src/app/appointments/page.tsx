@@ -1,7 +1,8 @@
 import { getUpcomingAppointments } from "@/lib/actions";
 import { Header } from "@/components/dashboard/Header";
 import { Sidebar } from "@/components/dashboard/Sidebar";
-import { Calendar, CalendarCheck } from "lucide-react";
+import { Calendar, CalendarCheck, Plus } from "lucide-react";
+import Link from "next/link";
 import AppointmentActionCard from "./AppointmentActionCard";
 
 export default async function AppointmentsPage() {
@@ -25,6 +26,14 @@ export default async function AppointmentsPage() {
                      {appointments.length} upcoming events • Maple House
                   </p>
                </div>
+
+                <Link 
+                  href="/appointments/new"
+                  className="flex items-center gap-2 rounded-2xl bg-purple-600 px-6 py-3.5 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-purple-700 shadow-xl shadow-purple-100 dark:shadow-none hover:-translate-y-0.5 active:scale-95 whitespace-nowrap"
+                >
+                  <Plus className="h-4 w-4 shrink-0" />
+                  Log Appointment
+                </Link>
             </div>
 
             {/* Content Area */}

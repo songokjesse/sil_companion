@@ -7,7 +7,8 @@ import { TaskTimeline } from "./TaskTimeline";
 import { AppointmentList } from "./AppointmentList";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { motion } from "framer-motion";
-import { Bell, BriefcaseMedical, Calendar, LayoutDashboard, ListChecks } from "lucide-react";
+import { Bell, BriefcaseMedical, Calendar, LayoutDashboard, ListChecks, Plus } from "lucide-react";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 interface DashboardProps {
@@ -106,6 +107,15 @@ export function Dashboard({ initialData }: DashboardProps) {
               </TabsContent>
 
               <TabsContent value="appointments" className="space-y-6 mt-0">
+                <div className="flex justify-end">
+                   <Link 
+                     href="/appointments/new"
+                     className="flex items-center gap-2 rounded-2xl bg-purple-600 px-6 py-3.5 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-purple-700 shadow-xl shadow-purple-200 dark:shadow-none hover:-translate-y-0.5 active:scale-95"
+                   >
+                     <Plus className="h-4 w-4 shrink-0" />
+                     Log New Appointment
+                   </Link>
+                </div>
                 <AppointmentList appointments={initialData.appointments} />
               </TabsContent>
             </Tabs>
