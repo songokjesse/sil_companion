@@ -53,7 +53,7 @@ export default async function UserManagement() {
             </TableHeader>
             <TableBody>
                {users.length > 0 ? (
-                 users.map((user) => (
+                 users.map((user, index) => (
                    <TableRow key={user.id} className="border-slate-100 dark:border-slate-900 group hover:bg-slate-50/80 dark:hover:bg-slate-900/40 transition-colors">
                       <TableCell className="py-4 pl-8">
                          <div className="flex items-center gap-4">
@@ -73,7 +73,11 @@ export default async function UserManagement() {
                          </div>
                       </TableCell>
                       <TableCell>
-                         <UserRoleSelect userId={user.id} currentRole={user.role} />
+                         <UserRoleSelect 
+                           userId={user.id} 
+                           currentRole={user.role} 
+                           isLast={index >= users.length - 2}
+                         />
                       </TableCell>
                       <TableCell>
                          <div className="flex flex-wrap gap-1.5">
@@ -127,4 +131,3 @@ export default async function UserManagement() {
     </div>
   );
 }
-

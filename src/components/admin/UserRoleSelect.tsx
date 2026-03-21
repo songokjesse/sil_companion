@@ -18,6 +18,7 @@ import { AnimatePresence, motion } from "framer-motion";
 interface UserRoleSelectProps {
   userId: string;
   currentRole: Role;
+  isLast?: boolean;
 }
 
 const roleConfig = {
@@ -47,7 +48,7 @@ const roleConfig = {
   },
 };
 
-export function UserRoleSelect({ userId, currentRole }: UserRoleSelectProps) {
+export function UserRoleSelect({ userId, currentRole, isLast }: UserRoleSelectProps) {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -103,15 +104,18 @@ export function UserRoleSelect({ userId, currentRole }: UserRoleSelectProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-40 bg-slate-900/5 backdrop-blur-[1px]" 
+              className="fixed inset-0 z-[60] bg-slate-900/5 backdrop-blur-[1px]" 
               onClick={() => setIsOpen(false)} 
             />
             <motion.div 
-              initial={{ opacity: 0, y: 10, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 10, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
               transition={{ type: "spring", damping: 20, stiffness: 300 }}
-              className="absolute top-full left-0 mt-2 w-52 rounded-[1.5rem] border border-slate-200/60 dark:border-slate-800/60 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl shadow-2xl z-50 overflow-hidden py-1.5"
+              className={cn(
+                "absolute left-0 w-52 rounded-[1.5rem] border border-slate-200/60 dark:border-slate-800/60 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl shadow-2xl z-[70] overflow-hidden py-1.5",
+                isLast ? "bottom-full mb-2" : "top-full mt-2"
+              )}
             >
               <div className="px-3 py-2 mb-1 border-b border-slate-100 dark:border-slate-800/60">
                 <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">Select Access Level</span>
