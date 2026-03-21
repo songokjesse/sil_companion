@@ -9,88 +9,108 @@ import {
   TableRow 
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { UserPlus, MoreVertical, ShieldCheck, Mail } from "lucide-react";
+import { UserPlus, MoreVertical, ShieldCheck, Mail, Users as UsersIcon } from "lucide-react";
+import { UserRoleSelect } from "@/components/admin/UserRoleSelect";
 
 export default async function UserManagement() {
   const users = await prisma.user.findMany({
-    include: { organization: true, houses: true }
+    include: { organization: true, houses: true },
+    orderBy: { createdAt: 'desc' }
   });
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-6 animate-in fade-in duration-500">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
          <div className="space-y-1">
-            <h1 className="text-3xl font-black tracking-tight text-primary">Staff Management</h1>
-            <p className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-               <ShieldCheck className="h-4 w-4 text-purple-600" />
-               Manage organization staff access, roles, and house assignments.
+            <div className="flex items-center gap-2">
+               <div className="h-1.5 w-1.5 rounded-full bg-purple-500 animate-pulse" />
+               <span className="text-[10px] font-black uppercase tracking-[0.2em] text-purple-600/80 dark:text-purple-400">Personnel Operations</span>
+            </div>
+            <h1 className="text-3xl font-[900] tracking-tight text-slate-900 dark:text-slate-100 uppercase">Staff Management</h1>
+            <p className="text-[11px] font-bold text-slate-400 dark:text-slate-500 flex items-center gap-2">
+               Manage organization staff access, roles, and residence assignments.
             </p>
          </div>
-         <Button className="font-bold bg-purple-600 hover:bg-purple-700 shadow-lg shadow-purple-100 h-10">
-            <UserPlus className="h-4 w-4 mr-2" />
+         <Button className="font-black text-[11px] uppercase tracking-widest bg-slate-900 hover:bg-purple-600 dark:bg-white dark:text-slate-900 dark:hover:bg-purple-600 dark:hover:text-white transition-all shadow-xl shadow-slate-200 dark:shadow-none h-[3.5rem] px-8 rounded-2xl group active:scale-95">
+            <UserPlus className="h-4 w-4 mr-2.5 group-hover:rotate-12 transition-transform" />
             Invite Staff Member
          </Button>
       </div>
 
-      <div className="rounded-2xl border bg-white dark:bg-slate-950 shadow-sm overflow-hidden">
+      <div className="rounded-[2rem] border border-slate-200/60 dark:border-slate-800/60 bg-white/50 dark:bg-slate-950/50 backdrop-blur-xl shadow-sm overflow-hidden">
          <Table>
-            <TableHeader className="bg-slate-50 dark:bg-slate-900">
-               <TableRow>
-                  <TableHead className="font-black text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400 py-4">User</TableHead>
-                  <TableHead className="font-black text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">Role</TableHead>
-                  <TableHead className="font-black text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">Assignments</TableHead>
-                  <TableHead className="font-black text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">Status</TableHead>
-                  <TableHead className="text-right"></TableHead>
+            <TableHeader className="bg-slate-50/50 dark:bg-slate-900/50">
+               <TableRow className="border-slate-200/60 dark:border-slate-800/60 hover:bg-transparent">
+                  <TableHead className="font-black text-[10px] uppercase tracking-[0.2em] text-slate-400 py-6 pl-8">Worker Profile</TableHead>
+                  <TableHead className="font-black text-[10px] uppercase tracking-[0.2em] text-slate-400">Access Role</TableHead>
+                  <TableHead className="font-black text-[10px] uppercase tracking-[0.2em] text-slate-400">Residence Hubs</TableHead>
+                  <TableHead className="font-black text-[10px] uppercase tracking-[0.2em] text-slate-400">Status</TableHead>
+                  <TableHead className="text-right pr-8"></TableHead>
                </TableRow>
             </TableHeader>
             <TableBody>
-               {users.map((user) => (
-                  <TableRow key={user.id} className="hover:bg-slate-50 dark:bg-slate-900 transition-colors">
-                     <TableCell className="py-4">
-                        <div className="flex items-center gap-3">
-                           <div className="h-9 w-9 rounded-full bg-purple-100 flex items-center justify-center font-bold text-purple-700">
-                              {user.name?.[0]}
-                           </div>
-                           <div className="flex flex-col">
-                              <span className="font-bold text-sm text-slate-800 dark:text-slate-100">{user.name}</span>
-                              <span className="text-xs text-muted-foreground font-medium flex items-center gap-1">
-                                 <Mail className="h-3 w-3" />
-                                 {user.email}
-                              </span>
-                           </div>
-                        </div>
-                     </TableCell>
-                     <TableCell>
-                        <Badge variant="secondary" className="font-bold text-[10px] uppercase bg-purple-50 text-purple-700 border-purple-100">
-                           {user.role}
-                        </Badge>
-                     </TableCell>
-                     <TableCell>
-                        <div className="flex flex-wrap gap-1">
-                           {user.houses.map((house) => (
-                              <Badge key={house.id} variant="outline" className="text-[10px] font-medium border-slate-200 dark:border-slate-800">
-                                 {house.name}
-                              </Badge>
-                           ))}
-                           {user.houses.length === 0 && <span className="text-xs text-muted-foreground italic">None</span>}
-                        </div>
-                     </TableCell>
-                     <TableCell>
-                        <div className="flex items-center gap-1.5">
-                           <div className="h-1.5 w-1.5 rounded-full bg-green-500" />
-                           <span className="text-xs font-bold text-slate-700">Active</span>
-                        </div>
-                     </TableCell>
-                     <TableCell className="text-right">
-                        <button className="p-2 hover:bg-slate-200 rounded-lg transition-all text-slate-400">
-                           <MoreVertical className="h-4 w-4" />
-                        </button>
-                     </TableCell>
-                  </TableRow>
-               ))}
+               {users.length > 0 ? (
+                 users.map((user) => (
+                   <TableRow key={user.id} className="border-slate-100 dark:border-slate-900 hover:bg-slate-50/50 dark:hover:bg-slate-900/30 transition-all group">
+                      <TableCell className="py-5 pl-8">
+                         <div className="flex items-center gap-4">
+                            <div className="relative">
+                               <div className="absolute inset-0 bg-purple-500 rounded-full blur-lg opacity-0 group-hover:opacity-20 transition-opacity" />
+                               <div className="relative h-11 w-11 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 flex items-center justify-center font-[900] text-slate-400 dark:text-slate-500 text-sm group-hover:text-purple-600 group-hover:border-purple-200 transition-all">
+                                 {user.name?.[0]}
+                               </div>
+                            </div>
+                            <div className="flex flex-col">
+                               <span className="font-black text-[13px] text-slate-800 dark:text-slate-100 uppercase tracking-tight">{user.name}</span>
+                               <span className="text-[10px] text-slate-400 font-bold flex items-center gap-1.5 uppercase tracking-widest mt-0.5">
+                                  <Mail className="h-3 w-3" />
+                                  {user.email}
+                               </span>
+                            </div>
+                         </div>
+                      </TableCell>
+                      <TableCell>
+                         <UserRoleSelect userId={user.id} currentRole={user.role} />
+                      </TableCell>
+                      <TableCell>
+                         <div className="flex flex-wrap gap-1.5">
+                            {user.houses.map((house) => (
+                               <Badge key={house.id} variant="outline" className="text-[9px] font-black uppercase tracking-widest border-slate-200 dark:border-slate-800 px-2 py-0.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors">
+                                  {house.name}
+                               </Badge>
+                            ))}
+                            {user.houses.length === 0 && <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest italic">Not Assigned</span>}
+                         </div>
+                      </TableCell>
+                      <TableCell>
+                         <div className="flex items-center gap-2">
+                            <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50" />
+                            <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">Active</span>
+                         </div>
+                      </TableCell>
+                      <TableCell className="text-right pr-8">
+                         <button className="h-9 w-9 flex items-center justify-center rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900 transition-all text-slate-400 hover:text-rose-600 border border-transparent hover:border-rose-100">
+                            <MoreVertical className="h-4 w-4" />
+                         </button>
+                      </TableCell>
+                   </TableRow>
+                 ))
+               ) : (
+                 <TableRow>
+                   <TableCell colSpan={5} className="py-20 text-center">
+                      <div className="flex flex-col items-center gap-4">
+                         <div className="h-16 w-16 rounded-[2rem] bg-slate-50 dark:bg-slate-900 flex items-center justify-center border-2 border-dashed border-slate-200 dark:border-slate-800">
+                            <UsersIcon className="h-8 w-8 text-slate-200" />
+                         </div>
+                         <p className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">No staff members found</p>
+                      </div>
+                   </TableCell>
+                 </TableRow>
+               )}
             </TableBody>
          </Table>
       </div>
     </div>
   );
 }
+
