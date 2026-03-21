@@ -92,9 +92,12 @@ export default async function UserManagement() {
                          </div>
                       </TableCell>
                       <TableCell className="text-right pr-8">
-                         <button className="h-9 w-9 flex items-center justify-center rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900 transition-all text-slate-400 hover:text-rose-600 border border-transparent hover:border-rose-100">
+                         <Link 
+                           href={`/admin/users/${user.id}`}
+                           className="inline-flex h-9 w-9 items-center justify-center rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900 transition-all text-slate-400 hover:text-purple-600 border border-transparent hover:border-purple-100"
+                         >
                             <MoreVertical className="h-4 w-4" />
-                         </button>
+                         </Link>
                       </TableCell>
                    </TableRow>
                  ))

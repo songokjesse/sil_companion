@@ -52,3 +52,25 @@ export async function createStaffUser(data: { name: string, email: string, role:
     return { success: false, error: error.message || "Failed to create staff" };
   }
 }
+
+export async function updateStaffUser(userId: string, data: { name: string, email: string, role: Role, houseIds?: string[] }) {
+  try {
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        name: data.name,
+        email: data.email,
+        role: data.role,
+        houses: data.houseIds ? {
+          set: data.houseIds.map(id => ({ id }))
+        } : undefined
+      },
+    });
+    
+    revalidatePath("/admin/users");
+    return { success: true };
+  } catch (error: any) {
+    console.error("Failed to update staff member:", error);
+    return { success: false, error: error.message || "Failed to update staff" };
+  }
+}
