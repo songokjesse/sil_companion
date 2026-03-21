@@ -30,3 +30,25 @@ export async function deleteUser(userId: string) {
     return { success: false, error: "Failed to delete user" };
   }
 }
+
+export async function createStaffUser(data: { name: string, email: string, role: Role }) {
+  try {
+    const org = await prisma.organization.findFirst();
+    if (!org) throw new Error("No organization found");
+
+    await prisma.user.create({
+      data: {
+        name: data.name,
+        email: data.email,
+        role: data.role,
+        organizationId: org.id,
+      },
+    });
+    
+    revalidatePath("/admin/users");
+    return { success: true };
+  } catch (error: any) {
+    console.error("Failed to create staff member:", error);
+    return { success: false, error: error.message || "Failed to create staff" };
+  }
+}

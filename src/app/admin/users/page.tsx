@@ -11,6 +11,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { UserPlus, MoreVertical, ShieldCheck, Mail, Users as UsersIcon } from "lucide-react";
 import { UserRoleSelect } from "@/components/admin/UserRoleSelect";
+import Link from "next/link";
 
 export default async function UserManagement() {
   const users = await prisma.user.findMany({
@@ -31,10 +32,12 @@ export default async function UserManagement() {
                Manage organization staff access, roles, and residence assignments.
             </p>
          </div>
-         <Button className="font-black text-[11px] uppercase tracking-widest bg-slate-900 hover:bg-purple-600 dark:bg-white dark:text-slate-900 dark:hover:bg-purple-600 dark:hover:text-white transition-all shadow-xl shadow-slate-200 dark:shadow-none h-[3.5rem] px-8 rounded-2xl group active:scale-95">
-            <UserPlus className="h-4 w-4 mr-2.5 group-hover:rotate-12 transition-transform" />
-            Invite Staff Member
-         </Button>
+         <Link href="/admin/users/new">
+            <Button className="font-black text-[11px] uppercase tracking-widest bg-slate-900 hover:bg-purple-600 dark:bg-white dark:text-slate-900 dark:hover:bg-purple-600 dark:hover:text-white transition-all shadow-xl shadow-slate-200 dark:shadow-none h-[3.5rem] px-8 rounded-2xl group active:scale-95">
+               <UserPlus className="h-4 w-4 mr-2.5 group-hover:rotate-12 transition-transform" />
+               Add Staff Member
+            </Button>
+         </Link>
       </div>
 
       <div className="rounded-[2rem] border border-slate-200/60 dark:border-slate-800/60 bg-white/50 dark:bg-slate-950/50 backdrop-blur-xl shadow-sm overflow-hidden">
