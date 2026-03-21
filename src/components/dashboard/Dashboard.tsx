@@ -22,7 +22,10 @@ export function Dashboard({ initialData }: DashboardProps) {
 
   return (
     <div className="flex h-[100dvh] w-full overflow-hidden bg-slate-50 dark:bg-slate-900/40">
-      <SidebarClient medicationsEnabled={initialData.medicationsEnabled !== false} />
+      <SidebarClient 
+        medicationsEnabled={initialData.medicationsEnabled !== false} 
+        userHouses={initialData.userHouses}
+      />
       <div className="flex flex-1 flex-col overflow-hidden">
         <HeaderClient houseName={initialData.houseName} alerts={initialData.alerts} />
         <div className="flex-1 overflow-y-auto min-h-0 bg-slate-50 dark:bg-slate-900/60 selection:bg-purple-100">

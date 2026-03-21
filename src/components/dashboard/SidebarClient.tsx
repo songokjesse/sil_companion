@@ -20,20 +20,24 @@ import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface SidebarProps {
   isAdminView?: boolean;
   medicationsEnabled?: boolean;
+  userHouses?: any[];
 }
 
-export function SidebarClient({ isAdminView = false, medicationsEnabled = true }: SidebarProps) {
+export function SidebarClient({ isAdminView = false, medicationsEnabled = true, userHouses = [] }: SidebarProps) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const currentHouse = searchParams.get('house');
   const session = authClient.useSession();
   const user = session?.data?.user as any;
   const [isOpen, setIsOpen] = useState(false);
-  const [showMore, setShowMore] = useState(false);
+  const [showHouses, setShowHouses] = useState(false);
 
   const adminNavItems = [
     { icon: LayoutGrid, label: "Admin Console", href: "/admin", active: pathname === "/admin" },
@@ -83,6 +87,57 @@ export function SidebarClient({ isAdminView = false, medicationsEnabled = true }
            <span className="text-[9px] font-black uppercase text-slate-400 tracking-[0.2em] mt-1 block">Support Portal</span>
         </div>
       </div>
+
+      {/* House Switcher */}
+      {userHouses.length > 1 && (
+        <div className="mb-6 px-1">
+          <button 
+            onClick={() => setShowHouses(!showHouses)}
+            className="w-full flex items-center justify-between p-3 rounded-2xl border border-slate-200/50 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 hover:bg-white dark:hover:bg-slate-900 transition-all group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="h-8 w-8 rounded-lg bg-indigo-50 dark:bg-indigo-950/30 flex items-center justify-center border border-indigo-100 dark:border-indigo-900/50">
+                <Building2 className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
+              </div>
+              <div className="flex flex-col items-start truncate">
+                <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Active Hub</span>
+                <span className="text-[11px] font-black text-slate-900 dark:text-slate-100 uppercase truncate">
+                  {currentHouse || userHouses[0]?.name || "Select Hub"}
+                </span>
+              </div>
+            </div>
+            <ChevronRight className={cn("h-4 w-4 text-slate-400 transition-transform", showHouses && "rotate-90")} />
+          </button>
+
+          <AnimatePresence>
+            {showHouses && (
+              <motion.div 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="mt-2 p-2 rounded-2xl border border-slate-200/50 dark:border-slate-800 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl shadow-xl space-y-1"
+              >
+                {userHouses.map((house) => (
+                  <Link
+                    key={house.id}
+                    href={`/?house=${encodeURIComponent(house.name)}`}
+                    onClick={() => setShowHouses(false)}
+                    className={cn(
+                      "flex items-center gap-3 p-2.5 rounded-xl text-[11px] font-black uppercase tracking-tight transition-all",
+                      (currentHouse === house.name || (!currentHouse && house.name === userHouses[0]?.name))
+                        ? "bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-400 border border-purple-100/50 dark:border-purple-800/50"
+                        : "text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-900/50"
+                    )}
+                  >
+                    <Building2 className="h-3.5 w-3.5" />
+                    {house.name}
+                  </Link>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      )}
 
       <nav className="flex-1 space-y-1">
         <p className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400/70 mb-3 px-3">Interface</p>
