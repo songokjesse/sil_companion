@@ -25,27 +25,27 @@ export function Dashboard({ initialData }: DashboardProps) {
       <SidebarClient medicationsEnabled={initialData.medicationsEnabled !== false} />
       <div className="flex flex-1 flex-col overflow-hidden">
         <HeaderClient houseName={initialData.houseName} alerts={initialData.alerts} />
-        <div className="flex-1 overflow-y-auto min-h-0 bg-slate-50 dark:bg-slate-900/60">
-          <main className="container mx-auto p-4 pb-28 md:p-10 md:pb-10 space-y-10 max-w-7xl animate-in fade-in duration-700">
+        <div className="flex-1 overflow-y-auto min-h-0 bg-slate-50 dark:bg-slate-900/60 selection:bg-purple-100">
+          <main className="container mx-auto p-4 pb-28 md:p-8 md:pb-8 space-y-6 max-w-7xl animate-in fade-in duration-700">
             {/* Page Title Section */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-2">
-              <div className="space-y-2">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-1">
+              <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <div className="h-2 w-2 rounded-full bg-purple-500 animate-pulse" />
-                  <span className="text-[11px] font-black uppercase tracking-[0.2em] text-purple-600/80 dark:text-purple-400">Operational Overview</span>
+                  <div className="h-1.5 w-1.5 rounded-full bg-purple-500 animate-pulse" />
+                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-purple-600/80 dark:text-purple-400">Live Operations</span>
                 </div>
-                <h2 className="text-4xl md:text-5xl font-[900] tracking-tight text-slate-900 dark:text-slate-100">
+                <h2 className="text-3xl md:text-4xl font-[900] tracking-tight text-slate-900 dark:text-slate-100 uppercase">
                   {initialData.houseName.split(' ')[0]}<span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600"> {initialData.houseName.split(' ').slice(1).join(' ')}</span>
                 </h2>
                 <div className="flex items-center gap-4 pt-1">
-                  <p className="text-xs font-bold text-slate-400 dark:text-slate-500 flex items-center gap-2">
-                    <Calendar className="h-4 w-4 text-slate-300" />
+                  <p className="text-[11px] font-bold text-slate-400 dark:text-slate-500 flex items-center gap-2">
+                    <Calendar className="h-3.5 w-3.5 text-slate-300" />
                     {mounted ? new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : "Loading..."}
                   </p>
-                  <div className="h-4 w-px bg-slate-200 dark:bg-slate-800" />
-                  <p className="text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
+                  <div className="h-3 w-px bg-slate-200 dark:bg-slate-800" />
+                  <p className="text-[11px] font-black text-emerald-600/80 dark:text-emerald-400 uppercase tracking-widest flex items-center gap-1.5">
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                    System Active
+                    Operational
                   </p>
                 </div>
               </div>
@@ -91,36 +91,33 @@ export function Dashboard({ initialData }: DashboardProps) {
                   </div>
 
                   {/* Right Column: Alerts & Important Info */}
-                  <div className="space-y-6">
+                  <div className="space-y-4">
                     <div className="space-y-1">
-                      <h3 className="text-xl font-black tracking-tight text-slate-800 dark:text-slate-100">Active Alerts</h3>
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Important house-wide notices</p>
+                      <h3 className="text-lg font-black tracking-tight text-slate-800 dark:text-slate-100 uppercase">Alerts</h3>
+                      <p className="text-[9px] font-bold uppercase tracking-widest text-slate-400">Operational notices</p>
                     </div>
                     
-                    <div className="space-y-4">
+                    <div className="space-y-2.5">
                       {initialData.alerts.length > 0 ? (
                          initialData.alerts.map((alert: any) => (
-                           <div key={alert.id} className={`group relative rounded-[2rem] border-2 p-6 transition-all hover:shadow-2xl ${alert.severity === "CRITICAL" ? "border-rose-100 bg-rose-50/30 dark:bg-rose-950/20" : "bg-white dark:bg-slate-950 border-slate-100 dark:border-slate-800 shadow-[0_8px_30px_rgb(0,0,0,0.02)]"}`}>
-                             <div className="flex gap-5">
-                               <div className={`p-4 rounded-2xl shrink-0 transition-transform group-hover:scale-110 ${alert.severity === "CRITICAL" ? "bg-rose-100 text-rose-600 shadow-lg shadow-rose-200/50" : "bg-purple-100 text-purple-600 shadow-lg shadow-purple-200/50"}`}>
-                                 <Bell className="h-6 w-6 stroke-[2.5]" />
+                           <div key={alert.id} className={`group relative rounded-[1.25rem] border p-4 transition-all hover:bg-white dark:hover:bg-slate-900 ${alert.severity === "CRITICAL" ? "border-rose-100 bg-rose-50/40 dark:bg-rose-950/20" : "bg-white/40 dark:bg-slate-950/40 border-slate-200/50 dark:border-slate-800/50 shadow-sm"}`}>
+                             <div className="flex gap-4">
+                               <div className={`h-10 w-10 flex items-center justify-center rounded-xl shrink-0 ${alert.severity === "CRITICAL" ? "bg-rose-100 text-rose-600" : "bg-purple-100 text-purple-600"}`}>
+                                 <Bell className="h-5 w-5 stroke-[2.5]" />
                                </div>
-                               <div className="space-y-1.5 flex-1">
-                                 <div className="flex items-center justify-between">
-                                    <h4 className={`text-sm font-black tracking-tight ${alert.severity === "CRITICAL" ? "text-rose-700 dark:text-rose-400" : "text-slate-900 dark:text-slate-100"}`}>{alert.participant}</h4>
-                                    <span className={cn("text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full", alert.severity === "CRITICAL" ? "bg-rose-100 text-rose-600" : "bg-slate-100 text-slate-500")}>{alert.severity}</span>
+                               <div className="space-y-0.5 min-w-0">
+                                 <div className="flex items-center justify-between gap-2">
+                                    <h4 className={`text-xs font-black tracking-tight uppercase truncate ${alert.severity === "CRITICAL" ? "text-rose-700 dark:text-rose-400" : "text-slate-900 dark:text-slate-100"}`}>{alert.participant}</h4>
+                                    <span className={cn("text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-md", alert.severity === "CRITICAL" ? "bg-rose-100 text-rose-600" : "bg-slate-100 text-slate-500")}>{alert.severity}</span>
                                  </div>
-                                 <p className={`text-[13px] leading-relaxed font-bold ${alert.severity === "CRITICAL" ? "text-rose-600" : "text-slate-500 dark:text-slate-400"}`}>{alert.message}</p>
+                                 <p className={`text-[11px] leading-tight font-bold line-clamp-2 ${alert.severity === "CRITICAL" ? "text-rose-600/90" : "text-slate-500 dark:text-slate-400"}`}>{alert.message}</p>
                                </div>
                              </div>
                            </div>
                          ))
                       ) : (
-                         <div className="flex flex-col items-center justify-center p-12 rounded-[2rem] border-2 border-dashed border-slate-100 dark:border-slate-800 text-center gap-4">
-                            <div className="h-12 w-12 rounded-full bg-slate-50 dark:bg-slate-900 flex items-center justify-center">
-                               <Bell className="h-6 w-6 text-slate-200" />
-                            </div>
-                            <p className="text-sm font-black text-slate-400 uppercase tracking-widest leading-tight">No Active Alerts</p>
+                         <div className="flex flex-col items-center justify-center p-8 rounded-[1.25rem] border border-dashed border-slate-200 dark:border-slate-800/60 text-center gap-3">
+                            <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] leading-tight">No Active Alerts</p>
                          </div>
                       )}
                     </div>

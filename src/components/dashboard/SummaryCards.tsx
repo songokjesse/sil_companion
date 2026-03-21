@@ -44,7 +44,7 @@ interface SummaryCardsProps {
 
 export function SummaryCards({ metrics }: SummaryCardsProps) {
   return (
-    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {metrics.map((item, index) => {
         const Icon = iconMap[item.icon] || Clock;
         const colors = colorMap[item.color] || colorMap.blue;
@@ -52,31 +52,19 @@ export function SummaryCards({ metrics }: SummaryCardsProps) {
         return (
           <motion.div
             key={item.title}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.08, duration: 0.5 }}
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: index * 0.05, duration: 0.4 }}
             className="group relative"
           >
-            <div className={`absolute -inset-0.5 bg-gradient-to-br ${colors.glow} opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500`} />
-            <Card className="relative overflow-hidden border border-slate-200/60 dark:border-slate-800/60 shadow-[0_8px_30px_rgb(0,0,0,0.02)] dark:shadow-none rounded-[2rem] transition-all hover:shadow-[0_20px_50px_rgba(0,0,0,0.04)] hover:border-purple-200/50 dark:hover:border-slate-700 bg-white/80 dark:bg-slate-950 backdrop-blur-sm">
-              <CardContent className="flex flex-col gap-6 p-7">
-                <div className="flex items-start justify-between">
-                  <div className={`p-4 rounded-2xl ${colors.bg} transition-all duration-500 group-hover:scale-110 group-hover:rotate-3`}>
-                    <Icon className={`h-6 w-6 ${colors.icon} stroke-[2.5]`} />
-                  </div>
-                  <div className="flex flex-col items-end">
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400/80 mb-1">{item.title}</span>
-                    <h3 className="text-4xl font-[900] tracking-tighter text-slate-900 dark:text-slate-100">{item.value}</h3>
-                  </div>
+            <Card className="relative overflow-hidden border border-slate-200/50 dark:border-slate-800/50 shadow-sm rounded-[1.5rem] transition-all hover:shadow-md hover:border-purple-200/50 bg-white/50 dark:bg-slate-950 backdrop-blur-sm">
+              <CardContent className="flex items-center gap-4 p-5">
+                <div className={`p-3 rounded-[1rem] ${colors.bg} transition-all duration-500`}>
+                  <Icon className={`h-5 w-5 ${colors.icon} stroke-[2.5]`} />
                 </div>
-                
-                <div className="flex items-center gap-2">
-                   <div className="flex -space-x-2">
-                      {[1,2,3].map(i => (
-                        <div key={i} className="h-5 w-5 rounded-full border-2 border-white dark:border-slate-950 bg-slate-100 dark:bg-slate-900" />
-                      ))}
-                   </div>
-                   <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Active Entries</span>
+                <div className="flex flex-col min-w-0">
+                  <span className="text-[9px] font-black uppercase tracking-widest text-slate-400/80 mb-0.5 truncate">{item.title}</span>
+                  <h3 className="text-2xl font-[900] tracking-tight text-slate-900 dark:text-slate-100">{item.value}</h3>
                 </div>
               </CardContent>
             </Card>
